@@ -34,6 +34,7 @@ body{background:var(--bg);color:var(--text);font-family:'EB Garamond',serif;min-
 .field input,.field textarea,.field select{width:100%;background:var(--bg3);border:1px solid var(--dim);border-radius:6px;padding:10px 12px;color:var(--text);font-family:'Tiro Devanagari Sanskrit',serif;font-size:15px;outline:none;line-height:1.6;transition:border-color .2s}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}
 .field textarea{resize:vertical}
+.field select{font-family:'EB Garamond',serif;font-size:14px;cursor:pointer}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
 /* ── COLOR THEME SELECTOR ── */
@@ -54,6 +55,7 @@ canvas#cv{width:100%;height:100%;display:block}
 .btn-outline{background:transparent;border:1px solid var(--dim);color:var(--muted)}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
 
+/* ── DIVIDER ── */
 .divider{height:1px;background:linear-gradient(to right,transparent,var(--gold2),transparent);margin:4px 16px 16px}
 
 /* ── SUGGESTIONS ── */
@@ -105,25 +107,18 @@ canvas#cv{width:100%;height:100%;display:block}
 </div>
 
 <!-- ACTIONS PANEL -->
-<div style="padding:0 16px 10px; display:flex; flex-direction:column; gap:10px;">
-  <button class="btn btn-outline" onclick="openSmartPaste()" style="width:100%; font-size:12px; border-color:var(--acc); color:var(--acc)">✨ Smart Paste : Auto-fill from text</button>
-  
-  <!-- 🏭 Factory Batch Engine Control Panel -->
-  <div style="background:var(--bg2); border:1px solid var(--dim); border-radius:8px; padding:12px; margin-top:4px;">
-    <div style="font-size:10px; color:var(--gold); letter-spacing:2px; text-transform:uppercase; font-family:'Philosopher',serif; margin-bottom:8px;">
-      🏭 Factory Batch Engine
-    </div>
-    <div style="display:flex; gap:10px; align-items:center;">
-      <button class="btn btn-outline" onclick="triggerCSVTarget()" style="flex:1; font-size:12px; border-color:var(--gold); color:var(--gold);">
-        📊 Load Batch CSV / JSON
-      </button>
-      <input type="file" id="batch-file-input" accept=".csv,.json" style="display:none;" onchange="handleBatchFile(this)"/>
-    </div>
-    
-    <div id="batch-nav-container" style="display:none; margin-top:10px; align-items:center; justify-content:space-between; background:var(--bg3); padding:6px 10px; border-radius:4px;">
-      <button onclick="navigateBatch(-1)" style="background:none; border:none; color:var(--gold); cursor:pointer; font-size:16px;">◀</button>
-      <span id="batch-index-display" style="font-size:12px; font-family:'Philosopher',serif; color:var(--text);">Row 1 of 1</span>
-      <button onclick="navigateBatch(1)" style="background:none; border:none; color:var(--gold); cursor:pointer; font-size:16px;">▶</button>
+<div style="padding:0 16px 10px;display:flex;flex-direction:column;gap:8px">
+  <button class="btn btn-outline" onclick="openSmartPaste()" style="width:100%;font-size:12px;border-color:var(--acc);color:var(--acc)">✨ Smart Paste — Auto-fill from text</button>
+
+  <!-- Factory Batch Engine -->
+  <div style="background:var(--bg2);border:1px solid var(--dim);border-radius:8px;padding:10px 12px">
+    <div style="font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-family:'Philosopher',serif;margin-bottom:8px">🏭 Batch Engine — Load CSV/JSON</div>
+    <button class="btn btn-outline" onclick="document.getElementById('batch-file-input').click()" style="width:100%;font-size:12px;border-color:var(--gold);color:var(--gold)">📊 Load Batch File</button>
+    <input type="file" id="batch-file-input" accept=".csv,.json" style="display:none" onchange="handleBatchFile(this)"/>
+    <div id="batch-nav-container" style="display:none;margin-top:8px;align-items:center;justify-content:space-between;background:var(--bg3);padding:6px 10px;border-radius:4px">
+      <button onclick="navigateBatch(-1)" style="background:none;border:none;color:var(--gold);cursor:pointer;font-size:18px">◀</button>
+      <span id="batch-index-display" style="font-size:12px;font-family:'Philosopher',serif;color:var(--text)">Post 1 of 1</span>
+      <button onclick="navigateBatch(1)" style="background:none;border:none;color:var(--gold);cursor:pointer;font-size:18px">▶</button>
     </div>
   </div>
 </div>
@@ -135,7 +130,10 @@ canvas#cv{width:100%;height:100%;display:block}
       <div style="font-family:'Tiro Devanagari Sanskrit',serif;font-size:18px;color:var(--gold)">✨ Smart Paste</div>
       <button onclick="closeSmartPaste()" style="background:none;border:1px solid var(--dim);color:var(--muted);padding:6px 14px;border-radius:4px;cursor:pointer;font-size:13px">✕</button>
     </div>
-    <textarea id="sp-input" rows="10" placeholder="यहाँ पेस्ट गर्नुहोस्...\n\nउदाहरण:\nशनि साढेसातीको प्रभाव\n१. यो साढे सात वर्ष चल्छ\n२. शनिदेवले कर्मको फल दिन्छन्" style="width:100%;background:var(--bg3);border:1px solid var(--dim);border-radius:6px;padding:12px;color:var(--text);font-family:'Tiro Devanagari Sanskrit',serif;font-size:14px;outline:none;line-height:1.7;resize:vertical;margin-bottom:12px"></textarea>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px;font-family:'EB Garamond',serif;line-height:1.7">
+      Copy any content — WhatsApp message, notes, typed text — and paste below. The tool will automatically detect the heading, numbered points, and source.
+    </div>
+    <textarea id="sp-input" rows="10" placeholder="यहाँ पेस्ट गर्नुहोस्..." style="width:100%;background:var(--bg3);border:1px solid var(--dim);border-radius:6px;padding:12px;color:var(--text);font-family:'Tiro Devanagari Sanskrit',serif;font-size:14px;outline:none;line-height:1.7;resize:vertical;margin-bottom:12px"></textarea>
     <div id="sp-preview" style="display:none;background:var(--bg2);border:1px solid var(--dim);border-radius:6px;padding:12px;margin-bottom:12px;font-size:13px;font-family:'EB Garamond',serif;line-height:1.8"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <button class="btn btn-outline" onclick="smartParsePeview()" style="font-size:13px">👁 Preview Parse</button>
@@ -144,13 +142,13 @@ canvas#cv{width:100%;height:100%;display:block}
   </div>
 </div>
 
-<!-- GLOBAL UNIVERSAL HOOK INPUT FIELD -->
-<div class="inputs" style="padding-bottom: 0;">
+<!-- GLOBAL HOOK FIELD — visible across all tabs -->
+<div class="inputs" style="padding-bottom:0">
   <div class="field" style="margin-bottom:6px">
-    <label style="color:var(--acc)">⚡ Universal Hook : (Pattern Interrupt - Global Across Tabs)</label>
-    <input id="f-hook" placeholder="जैसे: ⚠️ ९५% मानिसलाई थाहा छैन..." oninput="renderCard();updateWordCount()"/>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px" id="hook-suggestions">
-      ${['⚠️ ९५% मानिसलाई थाहा छैन','🔥 धेरैले बेवास्ता गर्छन्','❓ के तपाईंलाई थाहा छ?','🪐 यो कुरा धेरैलाई थाहा छैन'].map(h=>`<span onclick="document.getElementById('f-hook').value='${h}';renderCard();updateWordCount()" style="cursor:pointer;font-size:11px;background:var(--bg3);border:1px solid var(--dim);padding:4px 8px;border-radius:12px;color:var(--muted);font-family:'Tiro Devanagari Sanskrit',serif">${h}</span>`).join('')}
+    <label style="color:var(--acc)">⚡ Hook — Scroll stopper (all tabs)</label>
+    <input id="f-hook" placeholder="e.g. ⚠️ ९५% मानिसलाई थाहा छैन..." oninput="renderCard();updateWordCount()"/>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
+      ${['⚠️ ९५% मानिसलाई थाहा छैन','🔥 धेरैले बेवास्ता गर्छन्','❓ के तपाईंलाई थाहा छ?','🪐 यो कुरा धेरैलाई थाहा छैन','✨ आजको ज्ञान'].map(h=>`<span onclick="document.getElementById('f-hook').value='${h}';renderCard();updateWordCount()" style="cursor:pointer;font-size:11px;background:var(--bg3);border:1px solid var(--dim);padding:4px 8px;border-radius:12px;color:var(--muted);font-family:'Tiro Devanagari Sanskrit',serif">${h}</span>`).join('')}
     </div>
   </div>
 </div>
@@ -162,10 +160,12 @@ canvas#cv{width:100%;height:100%;display:block}
 
 <!-- PREVIEW -->
 <div class="preview-wrap">
-  <div class="preview-label" id="preview-label">Preview : 9:16</div>
+  <div class="preview-label" id="preview-label">Preview — 9:16</div>
+  <!-- Static card canvas -->
   <div class="canvas-outer" id="static-wrap">
     <canvas id="cv"></canvas>
   </div>
+  <!-- Animation canvas -->
   <div class="canvas-outer" id="anim-wrap" style="display:none;position:relative">
     <canvas id="anim-cv" style="width:100%;height:100%;display:block"></canvas>
     <div id="anim-cd-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none"></div>
@@ -178,7 +178,7 @@ canvas#cv{width:100%;height:100%;display:block}
   <button class="btn btn-outline" onclick="renderCard()">↺ Refresh</button>
 </div>
 
-<!-- QUALITY SCORE + AI OPTIMIZE PANEL -->
+<!-- QUALITY SCORE + AI OPTIMIZE (gyan only for now) -->
 <div id="quality-panel" style="padding:0 16px;margin-bottom:14px;display:none">
   <div style="background:var(--bg2);border:1px solid var(--dim);border-radius:8px;padding:12px 14px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -186,11 +186,10 @@ canvas#cv{width:100%;height:100%;display:block}
       <div id="qs-score" style="font-family:'Philosopher',serif;font-size:18px;font-weight:700"></div>
     </div>
     <div id="qs-checks" style="font-size:12px;line-height:2;font-family:'EB Garamond',serif"></div>
-    <button onclick="aiOptimize()" id="ai-opt-btn" class="btn btn-outline" style="width:100%;margin-top:10px;font-size:13px;border-color:var(--acc);color:var(--acc)">✨ AI Optimize : Improve Content</button>
+    <button onclick="aiOptimize()" id="ai-opt-btn" class="btn btn-outline" style="width:100%;margin-top:10px;font-size:13px;border-color:var(--acc);color:var(--acc)">✨ AI Optimize — Improve with Claude</button>
     <div id="ai-opt-result" style="display:none;margin-top:10px;background:var(--bg3);border-radius:6px;padding:10px 12px;font-size:12px;font-family:'EB Garamond',serif;line-height:1.8;color:var(--text)"></div>
   </div>
 </div>
-
 <div id="anim-actions" style="display:none;padding:0 16px;margin-bottom:16px">
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px">
     <button class="btn btn-gold" onclick="vcCountdown(3)" style="font-size:12px">⏱ 3s</button>
@@ -203,13 +202,18 @@ canvas#cv{width:100%;height:100%;display:block}
     <button class="btn btn-outline" onclick="vcSaveFrame()" style="font-size:12px;border-color:var(--gold);color:var(--gold)">🖼 Save Frame</button>
   </div>
   <div id="vc-rec-status" style="font-size:11px;color:var(--muted);text-align:center;min-height:16px;margin-bottom:6px;font-family:'Philosopher',serif"></div>
+  <div style="font-size:11px;color:var(--muted);line-height:1.9;font-family:'EB Garamond',serif">
+    📹 <b style="color:var(--gold)">Record WebM</b> — records full animation, downloads as .webm (Android Chrome)<br/>
+    📱 iOS: use ⏱ countdown + screen recorder instead<br/>
+    🖼 Save Frame: pause anytime → save that moment as PNG
+  </div>
 </div>
 
 <div class="divider"></div>
 
 <!-- SUGGESTIONS -->
 <div class="suggestions">
-  <div class="sug-title">✦ सुझाव : Content Ideas</div>
+  <div class="sug-title">✦ सुझाव — Content Ideas</div>
   <div class="sug-grid" id="sug-grid"></div>
 </div>
 
@@ -224,46 +228,52 @@ const THEMES = {
 };
 
 const TYPES = {
-  gyan:    {label:'ज्ञान',fields:['heading','body','source'],headingPH:'जैसे: शनि ग्रहको प्रभाव',sourcePH:'जैसे: बृहत्पाराशर होरा शास्त्र'},
-  upay:    {label:'उपाय',fields:['problem','body','note'],headingPH:'जैसे: घरमा नकारात्मक ऊर्जा',bodyPH:'उपाय वा समाधान नेपालीमा प्रत्येक नयाँ लाइनमा...',notePH:'जैसे: हरेक मंगलबार गर्नुहोस्'},
-  prashna: {label:'प्रश्न',fields:['question','answer'],questionPH:'जैसे: जन्म कुण्डलीमा ९ भाव के हो?',answerPH:'उत्तर वा रोचक तथ्य नेपालीमा...'},
-  mantra:  {label:'मन्त्र',fields:['mantra','artha'],mantraPH:'जैसे: ॐ नमः शिवाय',arthaPH:'मन्त्रको अर्थ नेपालीमा...'},
-  rashi:   {label:'राशि',fields:['rashi','body','keyword'],rashiPH:'जैसे: मेष राशि',bodyPH:'राशिको विशेषता वा आजको फल...',keywordPH:'जैसे: साहस • नेतृत्व • ऊर्जा'},
-  tathya:  {label:'तथ्य',fields:['number','heading','body'],numberPH:'जैसे: ७',headingPH:'जैसे: सात ग्रहको महत्त्व',bodyPH:'रोचक वेदिक तथ्य नेपालीमा...'},
+  gyan:    {label:'ज्ञान',fields:['heading','body','source'],headingPH:'e.g. शनि ग्रहको प्रभाव',bodyPH:'ज्योतिष वा वेदिक ज्ञानको कुरा नेपालीमा लेख्नुहोस्...',sourcePH:'e.g. बृहत्पाराशर होरा शास्त्र'},
+  upay:    {label:'उपाय',fields:['problem','body','note'],headingPH:'e.g. घरमा नकारात्मक ऊर्जा',bodyPH:'उपाय वा समाधान नेपालीमा...',notePH:'e.g. हरेक मंगलबार गर्नुहोस्'},
+  prashna: {label:'प्रश्न',fields:['question','answer'],questionPH:'e.g. के तपाईंलाई थाहा छ शनिदेव किन न्यायाधीश हुन्?',answerPH:'उत्तर वा रोचक तथ्य नेपालीमा...'},
+  mantra:  {label:'मन्त्र',fields:['mantra','artha'],mantraPH:'e.g. ॐ नमः शिवाय',arthaPH:'मन्त्रको अर्थ नेपालीमा...'},
+  rashi:   {label:'राशि',fields:['rashi','body','keyword'],rashiPH:'e.g. मेष राशि',bodyPH:'राशिको विशेषता वा आजको फल...',keywordPH:'e.g. साहस • नेतृत्व • ऊर्जा'},
+  tathya:  {label:'तथ्य',fields:['number','heading','body'],numberPH:'e.g. ७',headingPH:'e.g. सात ग्रहको महत्त्व',bodyPH:'रोचक वेदिक तथ्य नेपालीमा...'},
 };
 
 const SUGGESTIONS = {
   gyan:[
     {tag:'ज्योतिष',text:'शनि साढेसातीको बारेमा के जान्नु जरुरी छ?'},
-    {tag:'वास्तु',text:'घरको उत्तर-पूर्व दिशा किन पवित्र मानिन्छ?'}
+    {tag:'वास्तु',text:'घरको उत्तर-पूर्व दिशा किन पवित्र मानिन्छ?'},
+    {tag:'ज्योतिष',text:'राहु र केतु — छाया ग्रह किन महत्त्वपूर्ण?'},
+    {tag:'वेद',text:'एकादशीको व्रत किन राखिन्छ?'},
   ],
   upay:[
     {tag:'घर',text:'घरमा शान्ति ल्याउने ५ वास्तु उपाय'},
-    {tag:'धन',text:'शुक्रबारको यो उपायले आर्थिक समस्या हट्छ'}
+    {tag:'धन',text:'शुक्रबारको यो उपायले आर्थिक समस्या हट्छ'},
+    {tag:'स्वास्थ्य',text:'सूर्य नमस्कारको ज्योतिषीय महत्त्व'},
+    {tag:'सम्बन्ध',text:'दाम्पत्य जीवन सुधार्ने मंगल उपाय'},
   ],
   prashna:[
-    {tag:'प्रश्न',text:'जन्म कुण्डलीमा ९ घर के हो?'},
-    {tag:'प्रश्न',text:'किन मंगलबार मासु खान निषेध गरिन्छ?'}
+    {tag:'प्रश्न',text:'के तपाईंलाई थाहा छ — जन्म कुण्डलीमा ९ घर के हो?'},
+    {tag:'प्रश्न',text:'किन मंगलबार मासु खान निषेध गरिन्छ?'},
+    {tag:'प्रश्न',text:'पञ्चाङ्गमा पाँच कुरा के-के हुन्?'},
+    {tag:'प्रश्न',text:'राशिफल र कुण्डली — फरक के छ?'},
   ],
   mantra:[
     {tag:'मन्त्र',text:'ॐ गं गणपतये नमः'},
-    {tag:'मन्त्र',text:'महामृत्युञ्जय मन्त्र'}
+    {tag:'मन्त्र',text:'महामृत्युञ्जय मन्त्र'},
+    {tag:'मन्त्र',text:'गायत्री मन्त्र'},
+    {tag:'मन्त्र',text:'ॐ शं शनैश्चराय नमः'},
   ],
   rashi:[
-    {tag:'राशि',text:'मेष : आजको विशेष फल'},
-    {tag:'राशि',text:'वृश्चिक राशिको मुख्य विशेषता'}
+    {tag:'राशि',text:'मेष — आजको विशेष फल'},
+    {tag:'राशि',text:'वृश्चिक राशिको मुख्य विशेषता'},
+    {tag:'राशि',text:'मिथुन र बुध ग्रहको सम्बन्ध'},
+    {tag:'राशि',text:'वृष राशि — प्रेम र सम्बन्धमा'},
   ],
   tathya:[
     {tag:'तथ्य',text:'२७ नक्षत्र र चन्द्रमाको सम्बन्ध'},
-    {tag:'तथ्य',text:'१२ राशि र १२ भावको अर्थ'}
+    {tag:'तथ्य',text:'१२ राशि र १२ भावको अर्थ'},
+    {tag:'तथ्य',text:'नवग्रह — ९ ग्रहको संक्षिप्त परिचय'},
+    {tag:'तथ्य',text:'वैदिक ज्योतिष र पश्चिमी ज्योतिषको फरक'},
   ],
 };
-
-// SAFE TEXT BALANCER WITH RESILIENT BACKEND FALLBACK
-function getVal(id){
-  const el = document.getElementById(id);
-  return el ? el.value.trim() : '';
-}
 
 function setType(t,btn){
   _type=t;
@@ -306,22 +316,31 @@ function buildInputs(){
         <div id="word-count-msg" style="font-size:11px;margin-top:4px;font-family:'EB Garamond',serif"></div>
       </div>`;
   } else if(_type==='upay'){
-    html=`<div class="field"><label>समस्या / Problem</label><input id="f-problem" placeholder="${T.headingPH}" oninput="renderCard()"/></div>
-      <div class="field"><label>उपाय / Remedy Steps (New line per point)</label><textarea id="f-body" rows="5" placeholder="${T.bodyPH}" oninput="renderCard()"></textarea></div>
+    html=`
+      <div class="field"><label>समस्या / Problem</label><input id="f-problem" placeholder="${T.headingPH}" oninput="renderCard()"/></div>
+      <div class="field"><label>उपाय / Remedy</label><textarea id="f-body" rows="5" placeholder="${T.bodyPH}" oninput="renderCard()"></textarea></div>
       <div class="field"><label>विशेष नोट</label><input id="f-note" placeholder="${T.notePH}" oninput="renderCard()"/></div>`;
   } else if(_type==='prashna'){
-    html=`<div class="field"><label>प्रश्न / Question</label><textarea id="f-question" rows="3" placeholder="${T.questionPH}" oninput="renderCard()"></textarea></div>
+    html=`
+      <div class="field"><label>प्रश्न / Question</label><textarea id="f-question" rows="3" placeholder="${T.questionPH}" oninput="renderCard()"></textarea></div>
       <div class="field"><label>उत्तर / Answer</label><textarea id="f-answer" rows="4" placeholder="${T.answerPH}" oninput="renderCard()"></textarea></div>`;
   } else if(_type==='mantra'){
-    html=`<div class="field"><label>मन्त्र</label><textarea id="f-mantra" rows="2" placeholder="${T.mantraPH}" oninput="renderCard()" style="font-size:18px"></textarea></div>
+    html=`
+      <div class="field"><label>मन्त्र</label><textarea id="f-mantra" rows="2" placeholder="${T.mantraPH}" oninput="renderCard()" style="font-size:18px"></textarea></div>
       <div class="field"><label>अर्थ (नेपाली)</label><textarea id="f-artha" rows="4" placeholder="${T.arthaPH}" oninput="renderCard()"></textarea></div>`;
   } else if(_type==='rashi'){
-    html=`<div class="row2"><div class="field"><label>राशि</label><input id="f-rashi" placeholder="${T.rashiPH}" oninput="renderCard()"/></div>
-      <div class="field"><label>कीवर्ड</label><input id="f-keyword" placeholder="${T.keywordPH}" oninput="renderCard()"/></div></div>
+    html=`
+      <div class="row2">
+        <div class="field"><label>राशि</label><input id="f-rashi" placeholder="${T.rashiPH}" oninput="renderCard()"/></div>
+        <div class="field"><label>कीवर्ड</label><input id="f-keyword" placeholder="${T.keywordPH}" oninput="renderCard()"/></div>
+      </div>
       <div class="field"><label>विवरण</label><textarea id="f-body" rows="5" placeholder="${T.bodyPH}" oninput="renderCard()"></textarea></div>`;
   } else if(_type==='tathya'){
-    html=`<div class="row2"><div class="field"><label>अंक / Number</label><input id="f-number" placeholder="${T.numberPH}" oninput="renderCard()"/></div>
-      <div class="field"><label>शीर्षक</label><input id="f-heading" placeholder="${T.headingPH}" oninput="renderCard()"/></div></div>
+    html=`
+      <div class="row2">
+        <div class="field"><label>अंक / Number</label><input id="f-number" placeholder="${T.numberPH}" oninput="renderCard()"/></div>
+        <div class="field"><label>शीर्षक</label><input id="f-heading" placeholder="${T.headingPH}" oninput="renderCard()"/></div>
+      </div>
       <div class="field"><label>तथ्य / Fact</label><textarea id="f-body" rows="5" placeholder="${T.bodyPH}" oninput="renderCard()"></textarea></div>`;
   }
   document.getElementById('inputs-area').innerHTML=html;
@@ -342,6 +361,9 @@ function applySuggestion(card){
   if(target){target.value=text;renderCard();}
 }
 
+// ── CANVAS RENDERER ──
+function getVal(id){return document.getElementById(id)?.value.trim()||'';}
+
 function renderCard(){
   const cv=document.getElementById('cv');
   if(!cv)return;
@@ -357,6 +379,7 @@ function downloadCard(){
   drawCard(cv2.getContext('2d'),1080,1920,true);
   const dataUrl=cv2.toDataURL('image/png');
 
+  // Show inline save modal — works on iOS (long-press) and Android (download)
   let modal=document.getElementById('save-modal');
   if(!modal){
     modal=document.createElement('div');
@@ -367,6 +390,10 @@ function downloadCard(){
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
           <div style="color:#FFD860;font-family:'Philosopher',serif;font-size:16px">💾 Save Image</div>
           <button onclick="document.getElementById('save-modal').style.display='none'" style="background:none;border:1px solid #444;color:#888;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:13px">✕ Close</button>
+        </div>
+        <div style="background:#111;border-radius:8px;padding:12px;margin-bottom:12px;font-size:12px;color:#AAA;line-height:1.8;font-family:'EB Garamond',serif;text-align:center">
+          📱 <b style="color:#FFD860">iPhone:</b> Long-press the image below → Save to Photos<br/>
+          🤖 <b style="color:#FFD860">Android:</b> Long-press image → Download image
         </div>
         <img id="save-img" style="width:100%;border-radius:8px;display:block"/>
       </div>`;
@@ -380,10 +407,12 @@ function drawCard(ctx,W,H,full){
   const c=THEMES[_theme];
   const s=W/1080;
 
+  // ── Background ──
   const bg=ctx.createLinearGradient(0,0,0,H);
   bg.addColorStop(0,c.bg1); bg.addColorStop(1,c.bg2);
   ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
+  // Center glow
   const rg=ctx.createRadialGradient(W/2,H*0.42,0,W/2,H*0.42,W*0.7);
   rg.addColorStop(0,c.glow+'22'); rg.addColorStop(1,'transparent');
   ctx.fillStyle=rg; ctx.fillRect(0,0,W,H);
@@ -392,35 +421,75 @@ function drawCard(ctx,W,H,full){
   function cg(){ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;}
   function gl(x1,x2,y,op){
     const g=ctx.createLinearGradient(x1,y,x2,y);
-    g.addColorStop(0,'transparent');g.addColorStop(0.5,c.gold+Math.round(op*255).toString(16).padStart(2,'0'));g.addColorStop(1,'transparent');
-    ctx.strokeStyle=g; ctx.lineWidth=1.5*s;ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();
+    g.addColorStop(0,'transparent');
+    g.addColorStop(0.5,c.gold+Math.round(op*255).toString(16).padStart(2,'0'));
+    g.addColorStop(1,'transparent');
+    ctx.strokeStyle=g; ctx.lineWidth=1.5*s;
+    ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();
   }
   function rr(x,y,w,h,r){
-    ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
-    ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
-    ctx.lineTo(x+r,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+    ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
+    ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
   }
 
   ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+
+  // Safe margins — 8% from each edge so nothing gets cropped by Facebook/TikTok
   const SAFE=Math.round(86*s);
+  const CONTENT_LEFT=SAFE;
   const CONTENT_W=W-SAFE*2;
 
-  let y=H*0.10;
-  const catFS=Math.round(26*s);
-  ctx.font=`400 ${catFS}px 'Tiro Devanagari Sanskrit',serif`;
-  const catLabel=`${c.sym}  ${TYPES[_type].label}`;
-  const catW=ctx.measureText(catLabel).width+Math.round(60*s);
-  const catH=Math.round(50*s), catX=W/2-catW/2;
-  ctx.fillStyle=c.acc+'20';rr(catX,y,catW,catH,catH/2); ctx.fill();
-  ctx.strokeStyle=c.acc+'66'; ctx.lineWidth=1.5*s;rr(catX,y,catW,catH,catH/2); ctx.stroke();
-  sg(c.glow,14); ctx.fillStyle=c.gold; ctx.fillText(catLabel,W/2,y+catH*0.70);
-  y+=catH+Math.round(16*s); cg();
+  // Corner marks (subtle)
+  ctx.strokeStyle=c.gold+'33'; ctx.lineWidth=2*s;
+  const co=50*s;
+  [[SAFE*0.4,SAFE*0.4,1,1],[W-SAFE*0.4,SAFE*0.4,-1,1],
+   [SAFE*0.4,H-SAFE*0.4,1,-1],[W-SAFE*0.4,H-SAFE*0.4,-1,-1]].forEach(([cx,cy,sx,sy])=>{
+    ctx.beginPath();ctx.moveTo(cx+sx*co,cy);ctx.lineTo(cx,cy);ctx.lineTo(cx,cy+sy*co);ctx.stroke();
+  });
 
-  const hookExtra=drawHook(ctx,W,H,s,c,sg,cg,SAFE);
-  if(hookExtra>0) y+=hookExtra+Math.round(20*s);
+  // ── ZONE 1: ॐ symbol anchor (small, centered) ──
+  let y=H*0.09;
+  sg(c.glow,30);
+  ctx.font=`${Math.round(52*s)}px 'Tiro Devanagari Sanskrit',serif`;
+  ctx.fillStyle=c.gold+'BB';
+  ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+  ctx.fillText(c.sym,W/2,y+Math.round(50*s));
+  y+=Math.round(68*s); cg();
 
-  gl(SAFE,W-SAFE,y,0.3); y+=Math.round(36*s);
+  // ── Hook — HERO strip, first thing eyes go to ──
+  const hookVal=getVal('f-hook');
+  if(hookVal){
+    const hkFS=Math.round(38*s);
+    const hkH=Math.round(80*s);
+    // Bold full-width background
+    const hkGrad=ctx.createLinearGradient(0,y,W,y);
+    hkGrad.addColorStop(0,c.acc+'55');
+    hkGrad.addColorStop(0.5,c.acc+'88');
+    hkGrad.addColorStop(1,c.acc+'55');
+    ctx.fillStyle=hkGrad;
+    ctx.fillRect(SAFE,y,W-SAFE*2,hkH);
+    // Left accent bar
+    ctx.fillStyle=c.gold;
+    ctx.fillRect(SAFE,y,Math.round(5*s),hkH);
+    // Glow border bottom
+    ctx.strokeStyle=c.gold+'66'; ctx.lineWidth=1.5*s;
+    ctx.strokeRect(SAFE,y,W-SAFE*2,hkH);
+    // Hook text — bold, bright
+    sg(c.glow,25);
+    ctx.font=`700 ${hkFS}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle='#FFFFFF';
+    ctx.fillText(hookVal,W/2,y+hkH*0.66);
+    y+=hkH+Math.round(20*s); cg();
+  } else {
+    y+=Math.round(10*s);
+  }
 
+  gl(SAFE,W-SAFE,y,0.3); y+=Math.round(28*s);
+
+  // ── TYPE-SPECIFIC CONTENT ──
   const FOOTER_TOP=H*0.875;
   if(_type==='gyan') drawGyan(ctx,W,H,y,FOOTER_TOP,s,c,sg,cg,gl,rr,SAFE,CONTENT_W);
   else if(_type==='upay') drawUpay(ctx,W,H,y,s,c,sg,cg,gl,rr);
@@ -429,12 +498,22 @@ function drawCard(ctx,W,H,full){
   else if(_type==='rashi') drawRashi(ctx,W,H,y,s,c,sg,cg,gl,rr);
   else if(_type==='tathya') drawTathya(ctx,W,H,y,s,c,sg,cg,gl,rr);
 
+  // ── ZONE 3: Footer/CTA (safe from bottom) ──
   const fY=FOOTER_TOP;
   gl(SAFE,W-SAFE,fY,0.25);
+  // CTA line
   sg(c.acc+'66',20);
-  ctx.font=`400 ${Math.round(22*s)}px 'Philosopher',serif`;ctx.fillStyle=c.sub+'88';ctx.fillText(getRotatingCTA(),W/2,fY+Math.round(34*s));
-  sg(c.glow,35);ctx.fillStyle=c.gold;ctx.font=`400 ${Math.round(52*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillText('विधि चक्र',W/2,fY+Math.round(96*s));
-  ctx.fillStyle=c.sub+'66';ctx.font=`400 ${Math.round(20*s)}px 'Philosopher',serif`;ctx.fillText('VIDHI CHAKRA',W/2,fY+Math.round(122*s));
+  ctx.font=`400 ${Math.round(22*s)}px 'Philosopher',serif`;
+  ctx.fillStyle=c.sub+'88';
+  ctx.fillText(getRotatingCTA(),W/2,fY+Math.round(34*s));
+  // Brand
+  sg(c.glow,35);
+  ctx.fillStyle=c.gold;
+  ctx.font=`400 ${Math.round(52*s)}px 'Tiro Devanagari Sanskrit',serif`;
+  ctx.fillText('विधि चक्र',W/2,fY+Math.round(96*s));
+  ctx.fillStyle=c.sub+'66';
+  ctx.font=`400 ${Math.round(20*s)}px 'Philosopher',serif`;
+  ctx.fillText('VIDHI CHAKRA',W/2,fY+Math.round(122*s));
   cg();
 }
 
@@ -448,7 +527,15 @@ function wrapLines(ctx,text,font,maxW){
   if(cur)lines.push(cur);
   return lines;
 }
+function drawLines(ctx,lines,font,color,cx,startY,lh,sg,cg,glowC,glowSz){
+  ctx.font=font; ctx.fillStyle=color;
+  if(sg&&glowC)sg(glowC,glowSz||20);
+  lines.forEach((l,i)=>ctx.fillText(l,cx,startY+i*lh));
+  if(cg)cg();
+  return lines.length*lh;
+}
 
+// ── GYAN ──
 function drawGyan(ctx,W,H,contentTop,footerY,s,c,sg,cg,gl,rr,SAFE,CONTENT_W){
   const heading=getVal('f-heading'), source=getVal('f-source');
   const items=[1,2,3,4,5].map(i=>getVal('f-item-'+i)).filter(x=>x);
@@ -458,153 +545,235 @@ function drawGyan(ctx,W,H,contentTop,footerY,s,c,sg,cg,gl,rr,SAFE,CONTENT_W){
   const TEXT_AREA=CONTENT_W||(W-SAFE_L*2);
   let y=contentTop;
 
+  // Pre-measure heading lines for gap calculation
+  const hFS=Math.round(58*s), hLH=Math.round(70*s);
+  const hLines=heading?wrapLines(ctx,heading,`700 ${hFS}px 'Tiro Devanagari Sanskrit',serif`,TEXT_AREA*0.95):[];
+
+  // ── Headline ──
   if(heading){
-    const hFS=Math.round(54*s), hLH=Math.round(68*s);
-    const hLines=wrapLines(ctx,heading,`700 ${hFS}px 'Tiro Devanagari Sanskrit',serif`,TEXT_AREA*0.95);
-    sg(c.glow,35);ctx.font=`700 ${hFS}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.gold;
+    sg(c.glow,35);
+    ctx.font=`700 ${hFS}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.gold;
     hLines.forEach((l,i)=>ctx.fillText(l,W/2,y+hFS+i*hLH));
     y+=hLines.length*hLH+Math.round(18*s); cg();
   }
 
+  // ── Items — measure first, then distribute space evenly ──
   if(items.length){
     gl(SAFE_L,W-SAFE_L,y,0.25); y+=Math.round(16*s);
-    const iFS=Math.round(38*s), iLH=Math.round(52*s);
+    const iFS=Math.round(40*s), iLH=Math.round(52*s);
     const CIRC_R=Math.round(32*s);
     const CIRC_CX=SAFE_L+CIRC_R+Math.round(8*s);
     const TEXT_X=CIRC_CX+CIRC_R+Math.round(20*s);
     const TEXT_W=W-TEXT_X-SAFE_L;
-    const ROW_V_PAD=Math.round(22*s), ROW_GAP=Math.round(14*s);
+    const ROW_V_PAD=Math.round(22*s);
 
-    items.forEach((item,idx)=>{
+    // Measure all rows first
+    const rowHeights=items.map(item=>{
       const lines=wrapLines(ctx,item,`600 ${iFS}px 'Tiro Devanagari Sanskrit',serif`,TEXT_W);
-      const rowH=lines.length*iLH+ROW_V_PAD;
+      return{lines,rowH:lines.length*iLH+ROW_V_PAD};
+    });
+
+    // Calculate how much space is left after all rows
+    const totalRowH=rowHeights.reduce((a,r)=>a+r.rowH,0);
+    const sourceH=source?Math.round(40*s):0;
+    const availableForGaps=footerY-y-totalRowH-sourceH;
+    // Distribute space: minimum 10px gap, max 60px — shared between rows+1 slots
+    const numGaps=items.length+1;
+    const rawGap=Math.floor(availableForGaps/numGaps);
+    const ROW_GAP=Math.max(Math.round(10*s),Math.min(Math.round(60*s),rawGap));
+    // Top offset using first gap slot
+    y+=ROW_GAP;
+
+    rowHeights.forEach(({lines,rowH},idx)=>{
       const midY=y+rowH/2;
       const rowGrad=ctx.createLinearGradient(SAFE_L,y,W-SAFE_L,y);
-      rowGrad.addColorStop(0,c.acc+'18'); rowGrad.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=rowGrad;
+      rowGrad.addColorStop(0,c.acc+'18'); rowGrad.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=rowGrad;
       rr(SAFE_L,y,W-SAFE_L*2,rowH,Math.round(14*s)); ctx.fill();
-      ctx.strokeStyle=c.gold+'18'; ctx.lineWidth=1.5*s;rr(SAFE_L,y,W-SAFE_L*2,rowH,Math.round(14*s)); ctx.stroke();
-      
-      ctx.beginPath();ctx.arc(CIRC_CX,midY,CIRC_R,0,Math.PI*2);ctx.fillStyle=c.acc+'30'; ctx.fill();
+      ctx.strokeStyle=c.gold+'18'; ctx.lineWidth=1.5*s;
+      rr(SAFE_L,y,W-SAFE_L*2,rowH,Math.round(14*s)); ctx.stroke();
+      ctx.fillStyle=c.acc+'BB';
+      ctx.fillRect(SAFE_L,y+rowH*0.2,Math.round(4*s),rowH*0.6);
+      ctx.beginPath();ctx.arc(CIRC_CX,midY,CIRC_R,0,Math.PI*2);
+      ctx.fillStyle=c.acc+'30'; ctx.fill();
       ctx.strokeStyle=c.gold+'99'; ctx.lineWidth=Math.round(2.5*s); ctx.stroke();
-      sg(c.glow,15);ctx.font=`700 ${Math.round(30*s)}px 'Philosopher',serif`;ctx.fillStyle=c.gold; ctx.textAlign='center';
+      sg(c.glow,15);
+      ctx.font=`700 ${Math.round(30*s)}px 'Philosopher',serif`;
+      ctx.fillStyle=c.gold; ctx.textAlign='center';
       ctx.fillText(idx+1,CIRC_CX,midY+Math.round(11*s)); cg();
-      
-      ctx.textAlign='left';ctx.font=`600 ${iFS}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.text;
+      ctx.textAlign='left';
+      ctx.font=`600 ${iFS}px 'Tiro Devanagari Sanskrit',serif`;
+      ctx.fillStyle=c.text;
       const textY=midY-(lines.length*iLH)/2+iLH*0.78;
       lines.forEach((l,li)=>ctx.fillText(l,TEXT_X,textY+li*iLH));
-      ctx.textAlign='center';y+=rowH+ROW_GAP;
+      ctx.textAlign='center';
+      y+=rowH+ROW_GAP;
     });
     cg();
   }
 
   if(source){
-    y+=Math.round(8*s);ctx.font=`italic 400 ${Math.round(24*s)}px 'EB Garamond',serif`;ctx.fillStyle=c.sub+'66';
-    ctx.fillText(': ' + source + ' :', W/2, y+Math.round(24*s));
+    y+=Math.round(8*s);
+    ctx.font=`italic 400 ${Math.round(24*s)}px 'EB Garamond',serif`;
+    ctx.fillStyle=c.sub+'66';
+    ctx.fillText('— '+source+' —',W/2,y+Math.round(24*s));
   }
 }
-
+// ── UPAY ──
 function drawUpay(ctx,W,H,y,s,c,sg,cg,gl,rr){
   const problem=getVal('f-problem'), body=getVal('f-body'), note=getVal('f-note');
   if(problem){
-    const pFS=Math.round(42*s);
+    // Problem header bar
+    const pFS=Math.round(38*s);
     const pl=wrapLines(ctx,problem,`700 ${pFS}px 'Tiro Devanagari Sanskrit',serif`,W*0.76);
-    const pH=pl.length*pFS*1.38+36*s;
-    ctx.fillStyle=c.acc+'28';rr(40*s,y,W-80*s,pH,14*s); ctx.fill();
-    ctx.strokeStyle=c.acc+'66'; ctx.lineWidth=1.5*s;rr(40*s,y,W-80*s,pH,14*s); ctx.stroke();
-    sg(c.glow,20);ctx.font=`700 ${pFS}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.gold;
-    pl.forEach((l,i)=>ctx.fillText(l,W/2,y+pFS*1.1+i*pFS*1.38));
+    const pH=pl.length*pFS*1.4+48*s;
+    ctx.fillStyle=c.acc+'28';
+    rr(40*s,y,W-80*s,pH,14*s); ctx.fill();
+    ctx.strokeStyle=c.acc+'66'; ctx.lineWidth=1.5*s;
+    rr(40*s,y,W-80*s,pH,14*s); ctx.stroke();
+    sg(c.glow,20);
+    ctx.font=`700 ${pFS}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.gold;
+    pl.forEach((l,i)=>ctx.fillText(l,W/2,y+pFS*1.1+i*pFS*1.4));
     y+=pH+28*s; cg();
   }
   if(body){
+    // Numbered remedy steps
     const steps=body.split('\n').filter(x=>x.trim());
     steps.forEach((step,i)=>{
-      const bl=wrapLines(ctx,step,`400 ${Math.round(34*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.74);
-      const rH=bl.length*46*s+40*s;
+      const bl=wrapLines(ctx,step,`400 ${Math.round(32*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.74);
+      const rH=bl.length*42*s+40*s;
       const rY=y;
-      ctx.fillStyle='rgba(0,0,0,0.38)';rr(40*s,rY,W-80*s,rH,12*s); ctx.fill();
-      ctx.strokeStyle=c.gold+'20'; ctx.lineWidth=1.5*s;rr(40*s,rY,W-80*s,rH,12*s); ctx.stroke();
+      ctx.fillStyle='rgba(0,0,0,0.38)';
+      rr(40*s,rY,W-80*s,rH,12*s); ctx.fill();
+      ctx.strokeStyle=c.gold+'20'; ctx.lineWidth=1.5*s;
+      rr(40*s,rY,W-80*s,rH,12*s); ctx.stroke();
+      // Number circle
       const cx=88*s, cy=rY+rH/2, cr=28*s;
-      ctx.beginPath(); ctx.arc(cx,cy,cr,0,Math.PI*2);ctx.fillStyle=c.acc+'44'; ctx.fill();
+      ctx.beginPath(); ctx.arc(cx,cy,cr,0,Math.PI*2);
+      ctx.fillStyle=c.acc+'44'; ctx.fill();
       ctx.strokeStyle=c.gold+'88'; ctx.lineWidth=2*s; ctx.stroke();
-      ctx.font=`700 ${Math.round(28*s)}px 'Philosopher',serif`;ctx.fillStyle=c.gold;ctx.fillText(i+1,cx,cy+10*s);
-      ctx.font=`400 ${Math.round(34*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.text+'EE';
-      const textX=134*s, textY=rY+rH/2-(bl.length*46*s)/2+34*s;ctx.textAlign='left';
-      bl.forEach((l,j)=>ctx.fillText(l,textX,textY+j*46*s));
-      ctx.textAlign='center';y+=rH+12*s; cg();
+      sg(null,0);
+      ctx.font=`700 ${Math.round(28*s)}px 'Philosopher',serif`;
+      ctx.fillStyle=c.gold;
+      ctx.fillText(i+1,cx,cy+10*s);
+      ctx.font=`400 ${Math.round(32*s)}px 'Tiro Devanagari Sanskrit',serif`;
+      ctx.fillStyle=c.text+'EE';
+      const textX=130*s, textY=rY+rH/2-(bl.length*42*s)/2+32*s;
+      ctx.textAlign='left';
+      bl.forEach((l,j)=>ctx.fillText(l,textX,textY+j*42*s));
+      ctx.textAlign='center';
+      y+=rH+10*s; cg();
     });
   }
   if(note){
-    y+=10*s;ctx.font=`italic 400 ${Math.round(26*s)}px 'EB Garamond',serif`;ctx.fillStyle=c.gold+'AA';
+    y+=10*s;
+    ctx.font=`italic 400 ${Math.round(26*s)}px 'EB Garamond',serif`;
+    ctx.fillStyle=c.gold+'AA';
     ctx.fillText('⭐ '+note,W/2,y+26*s);
   }
 }
 
+// ── PRASHNA ──
 function drawPrashna(ctx,W,H,y,s,c,sg,cg,gl,rr){
   const q=getVal('f-question'), a=getVal('f-answer');
   if(q){
-    const qFS=Math.round(44*s);
-    const ql=wrapLines(ctx,q,`700 ${qFS}px 'Tiro Devanagari Sanskrit',serif`,W*0.82);
+    // Question text first, then ? after
+    const ql=wrapLines(ctx,q,`700 ${Math.round(44*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.82);
     const qH=ql.length*58*s+48*s;
-    ctx.fillStyle='rgba(0,0,0,0.4)';rr(40*s,y,W-80*s,qH,14*s); ctx.fill();
-    ctx.strokeStyle=c.acc+'55'; ctx.lineWidth=2*s;rr(40*s,y,W-80*s,qH,14*s); ctx.stroke();
-    sg(c.glow,18);ctx.font=`700 ${qFS}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.gold;
+    ctx.fillStyle='rgba(0,0,0,0.4)';
+    rr(40*s,y,W-80*s,qH,14*s); ctx.fill();
+    ctx.strokeStyle=c.acc+'55'; ctx.lineWidth=2*s;
+    rr(40*s,y,W-80*s,qH,14*s); ctx.stroke();
+    sg(c.glow,18);
+    ctx.font=`700 ${Math.round(44*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.gold;
     ql.forEach((l,i)=>ctx.fillText(l,W/2,y+48*s+i*58*s));
-    y+=qH+24*s; cg();
+    y+=qH+16*s; cg();
+    // Big ? after the question
+    sg(c.glow,60);
+    ctx.font=`700 ${Math.round(110*s)}px 'Philosopher',serif`;
+    ctx.fillStyle=c.acc+'66';
+    ctx.fillText('?',W/2,y+100*s);
+    y+=120*s; cg();
   }
   if(a){
-    gl(80*s,W-80*s,y,0.35); y+=40*s;
-    const aFS=Math.round(36*s);
-    const al=wrapLines(ctx,a,`400 ${aFS}px 'Tiro Devanagari Sanskrit',serif`,W*0.80);
-    const aH=al.length*54*s+48*s;
-    ctx.fillStyle='rgba(0,0,0,0.32)';rr(50*s,y,W-100*s,aH,14*s); ctx.fill();
-    ctx.strokeStyle=c.gold+'25'; ctx.lineWidth=1.5*s;rr(50*s,y,W-100*s,aH,14*s); ctx.stroke();
-    ctx.font=`400 ${aFS}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.text+'EE';
-    al.forEach((l,i)=>ctx.fillText(l,W/2,y+46*s+i*54*s));
+    gl(80*s,W-80*s,y,0.35); y+=30*s;
+    const al=wrapLines(ctx,a,`400 ${Math.round(36*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.80);
+    const aH=al.length*50*s+48*s;
+    ctx.fillStyle='rgba(0,0,0,0.32)';
+    rr(50*s,y,W-100*s,aH,14*s); ctx.fill();
+    ctx.strokeStyle=c.gold+'25'; ctx.lineWidth=1.5*s;
+    rr(50*s,y,W-100*s,aH,14*s); ctx.stroke();
+    sg(null,0);
+    ctx.font=`400 ${Math.round(36*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.text+'EE';
+    al.forEach((l,i)=>ctx.fillText(l,W/2,y+44*s+i*50*s));
     cg();
   }
 }
 
+// ── MANTRA ──
 function drawMantra(ctx,W,H,y,s,c,sg,cg,gl,rr){
   const mantra=getVal('f-mantra'), artha=getVal('f-artha');
   if(mantra){
-    sg(c.glow,50);ctx.font=`700 ${Math.round(62*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.gold;
+    sg(c.glow,50);
+    ctx.font=`700 ${Math.round(62*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.gold;
     const ml=wrapLines(ctx,mantra,`700 ${Math.round(62*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.84);
     ml.forEach((l,i)=>ctx.fillText(l,W/2,y+66*s+i*76*s));
     y+=ml.length*76*s+32*s; cg();
   }
   if(artha){
+    // अर्थ strip
     gl(70*s,W-70*s,y,0.4); y+=10*s;
-    ctx.fillStyle=c.acc+'22';ctx.fillRect(0,y,W,38*s);
-    sg(c.acc+'99',15);ctx.font=`400 ${Math.round(22*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.acc+'CC';
-    ctx.fillText(': अर्थ :', W/2, y+28*s);
-    y+=46*s;gl(70*s,W-70*s,y,0.4); y+=24*s; cg();
+    ctx.fillStyle=c.acc+'22';
+    ctx.fillRect(0,y,W,38*s);
+    sg(c.acc+'99',15);
+    ctx.font=`400 ${Math.round(22*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.acc+'CC';
+    ctx.fillText('— अर्थ —',W/2,y+28*s);
+    y+=46*s;
+    gl(70*s,W-70*s,y,0.4); y+=24*s; cg();
     const al=wrapLines(ctx,artha,`400 ${Math.round(36*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.80);
-    const aH=al.length*52*s+44*s;
-    ctx.fillStyle='rgba(0,0,0,0.38)';rr(50*s,y,W-100*s,aH,14*s); ctx.fill();
-    ctx.font=`400 ${Math.round(36*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.text+'EE';
-    al.forEach((l,i)=>ctx.fillText(l,W/2,y+42*s+i*52*s));
+    const aH=al.length*50*s+44*s;
+    ctx.fillStyle='rgba(0,0,0,0.38)';
+    rr(50*s,y,W-100*s,aH,14*s); ctx.fill();
+    sg(null,0);
+    ctx.font=`400 ${Math.round(36*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.text+'EE';
+    al.forEach((l,i)=>ctx.fillText(l,W/2,y+42*s+i*50*s));
     cg();
   }
 }
 
+// ── RASHI ──
 function drawRashi(ctx,W,H,y,s,c,sg,cg,gl,rr){
   const rashi=getVal('f-rashi'), body=getVal('f-body'), keyword=getVal('f-keyword');
   if(rashi){
-    sg(c.glow,60);ctx.font=`700 ${Math.round(82*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.gold;
+    sg(c.glow,60);
+    ctx.font=`700 ${Math.round(82*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.gold;
     ctx.fillText(rashi,W/2,y+82*s);
     y+=100*s; cg();
   }
   if(keyword){
+    // Keyword pills
     const keys=keyword.split('•').map(k=>k.trim()).filter(Boolean);
     const pillH=44*s, gap=14*s;
+    let px=0;
     ctx.font=`400 ${Math.round(24*s)}px 'Philosopher',serif`;
     const totalW=keys.reduce((a,k)=>a+ctx.measureText(k).width+50*s,0)+(keys.length-1)*gap;
     let startX=(W-Math.min(totalW,W-80*s))/2;
     keys.forEach(k=>{
       const kW=ctx.measureText(k).width+50*s;
-      ctx.fillStyle=c.acc+'33';rr(startX,y,kW,pillH,pillH/2); ctx.fill();
-      ctx.strokeStyle=c.gold+'55'; ctx.lineWidth=1.5*s;rr(startX,y,kW,pillH,pillH/2); ctx.stroke();
-      ctx.fillStyle=c.text+'CC';ctx.fillText(k,startX+kW/2,y+pillH*0.68);
+      ctx.fillStyle=c.acc+'33';
+      rr(startX,y,kW,pillH,pillH/2); ctx.fill();
+      ctx.strokeStyle=c.gold+'55'; ctx.lineWidth=1.5*s;
+      rr(startX,y,kW,pillH,pillH/2); ctx.stroke();
+      ctx.fillStyle=c.text+'CC';
+      ctx.fillText(k,startX+kW/2,y+pillH*0.68);
       startX+=kW+gap;
     });
     y+=pillH+24*s;
@@ -612,24 +781,34 @@ function drawRashi(ctx,W,H,y,s,c,sg,cg,gl,rr){
   if(body){
     gl(80*s,W-80*s,y,0.3); y+=28*s;
     const bl=wrapLines(ctx,body,`400 ${Math.round(36*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.80);
-    const bH=bl.length*52*s+44*s;
-    ctx.fillStyle='rgba(0,0,0,0.35)';rr(50*s,y,W-100*s,bH,14*s); ctx.fill();
-    ctx.strokeStyle=c.gold+'22'; ctx.lineWidth=1.5*s;rr(50*s,y,W-100*s,bH,14*s); ctx.stroke();
-    ctx.font=`400 ${Math.round(36*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.text+'EE';
-    bl.forEach((l,i)=>ctx.fillText(l,W/2,y+42*s+i*52*s));
+    const bH=bl.length*50*s+44*s;
+    ctx.fillStyle='rgba(0,0,0,0.35)';
+    rr(50*s,y,W-100*s,bH,14*s); ctx.fill();
+    ctx.strokeStyle=c.gold+'22'; ctx.lineWidth=1.5*s;
+    rr(50*s,y,W-100*s,bH,14*s); ctx.stroke();
+    sg(null,0);
+    ctx.font=`400 ${Math.round(36*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.text+'EE';
+    bl.forEach((l,i)=>ctx.fillText(l,W/2,y+42*s+i*50*s));
     cg();
   }
 }
 
+// ── TATHYA ──
 function drawTathya(ctx,W,H,y,s,c,sg,cg,gl,rr){
   const num=getVal('f-number'), heading=getVal('f-heading'), body=getVal('f-body');
   if(num){
-    sg(c.glow,80);ctx.font=`700 ${Math.round(160*s)}px 'Philosopher',serif`;ctx.fillStyle=c.acc+'33';
+    // Giant number
+    sg(c.glow,80);
+    ctx.font=`700 ${Math.round(160*s)}px 'Philosopher',serif`;
+    ctx.fillStyle=c.acc+'33';
     ctx.fillText(num,W/2,y+140*s);
     y+=150*s; cg();
   }
   if(heading){
-    sg(c.glow,25);ctx.font=`700 ${Math.round(48*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.gold;
+    sg(c.glow,25);
+    ctx.font=`700 ${Math.round(48*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.gold;
     const hl=wrapLines(ctx,heading,`700 ${Math.round(48*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.82);
     hl.forEach((l,i)=>ctx.fillText(l,W/2,y+52*s+i*60*s));
     y+=hl.length*60*s+20*s; cg();
@@ -637,15 +816,20 @@ function drawTathya(ctx,W,H,y,s,c,sg,cg,gl,rr){
   if(body){
     gl(80*s,W-80*s,y,0.3); y+=26*s;
     const bl=wrapLines(ctx,body,`400 ${Math.round(34*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.78);
-    const bH=bl.length*50*s+44*s;
-    ctx.fillStyle='rgba(0,0,0,0.35)';rr(50*s,y,W-100*s,bH,14*s); ctx.fill();
-    ctx.strokeStyle=c.gold+'22'; ctx.lineWidth=1.5*s;rr(50*s,y,W-100*s,bH,14*s); ctx.stroke();
-    ctx.font=`400 ${Math.round(34*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.text+'EE';
-    bl.forEach((l,i)=>ctx.fillText(l,W/2,y+42*s+i*50*s));
+    const bH=bl.length*48*s+44*s;
+    ctx.fillStyle='rgba(0,0,0,0.35)';
+    rr(50*s,y,W-100*s,bH,14*s); ctx.fill();
+    ctx.strokeStyle=c.gold+'22'; ctx.lineWidth=1.5*s;
+    rr(50*s,y,W-100*s,bH,14*s); ctx.stroke();
+    sg(null,0);
+    ctx.font=`400 ${Math.round(34*s)}px 'Tiro Devanagari Sanskrit',serif`;
+    ctx.fillStyle=c.text+'EE';
+    bl.forEach((l,i)=>ctx.fillText(l,W/2,y+42*s+i*48*s));
     cg();
   }
 }
 
+// ── VIEW SWITCHER ──
 let _view='static';
 function setView(v,btn){
   _view=v;
@@ -655,15 +839,17 @@ function setView(v,btn){
   document.getElementById('anim-wrap').style.display=v==='anim'?'block':'none';
   document.getElementById('static-actions').style.display=v==='static'?'grid':'none';
   document.getElementById('anim-actions').style.display=v==='anim'?'block':'none';
-  document.getElementById('preview-label').textContent=v==='static'?'Preview : 9:16':'Animation Preview : 9:16';
+  document.getElementById('preview-label').textContent=v==='static'?'Preview — 9:16':'Animation Preview — 9:16';
   if(v==='anim'){vcReset();}else{renderCard();}
 }
 
+// ── ANIMATION ENGINE ──
 let _vt=0,_vraf=null,_vplaying=false,_vparticles=[];
 const VC_DUR=24;
 
 function vcInitParticles(){
-  const cv=document.getElementById('anim-cv');if(!cv)return;
+  const cv=document.getElementById('anim-cv');
+  if(!cv)return;
   _vparticles=[];
   for(let i=0;i<55;i++) _vparticles.push({
     x:Math.random()*cv.width, y:Math.random()*cv.height,
@@ -681,10 +867,13 @@ function vcSetupCanvas(){
   return cv.getContext('2d');
 }
 
+function vcEase(t){return 1-(1-Math.min(Math.max(t,0),1))*(1-Math.min(Math.max(t,0),1));}
+
 function vcPlay(){
   const btn=document.getElementById('vc-play-btn');
   if(_vplaying){_vplaying=false;cancelAnimationFrame(_vraf);btn.textContent='▶ Play immediately';return;}
-  vcInitParticles();_vt=0;_vplaying=true;btn.textContent='⏸ Pause';
+  vcInitParticles();
+  _vt=0;_vplaying=true;btn.textContent='⏸ Pause';
   const start=performance.now();
   function loop(now){
     _vt=Math.min((now-start)/1000,VC_DUR);
@@ -702,8 +891,10 @@ function vcReset(){
 }
 
 function vcCountdown(secs){
-  _vplaying=false;cancelAnimationFrame(_vraf);vcReset();
-  let rem=secs;const ov=document.getElementById('anim-cd-overlay');
+  _vplaying=false;cancelAnimationFrame(_vraf);
+  vcReset();
+  let rem=secs;
+  const ov=document.getElementById('anim-cd-overlay');
   function tick(){
     if(rem<=0){ov.innerHTML='';vcPlay();return;}
     ov.innerHTML=`<div style="background:rgba(0,0,0,0.75);border-radius:16px;padding:20px 32px;text-align:center;color:#FFD860;font-family:'Philosopher',serif">
@@ -729,356 +920,684 @@ function vcDrawFrame(t){
     ctx.strokeStyle=g;ctx.lineWidth=1.5*s;ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();
   }
   function rr2(x,y,w,h,r){
-    ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y+r,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x+r,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+    ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
   }
   function wl(text,font,maxW){ctx.font=font;const words=text.split(/\s+/);const lines=[];let cur='';words.forEach(w=>{const tt=cur?cur+' '+w:w;if(ctx.measureText(tt).width>maxW&&cur){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);return lines;}
 
-  const bg=ctx.createRadialGradient(W/2,H*0.3,0,W/2,H*0.3,H*0.9);bg.addColorStop(0,c.bg1);bg.addColorStop(1,c.bg2);
+  // Background
+  const bg=ctx.createRadialGradient(W/2,H*0.3,0,W/2,H*0.3,H*0.9);
+  bg.addColorStop(0,c.bg1);bg.addColorStop(1,c.bg2);
   ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-  
   const rg=ctx.createRadialGradient(W/2,H*0.3,0,W/2,H*0.3,W*0.7);
-  const pulse=0.10+0.06*Math.sin(t*1.4);bg.addColorStop(0,c.glow+Math.round(pulse*255).toString(16).padStart(2,'0'));rg.addColorStop(1,'transparent');
+  const pulse=0.10+0.06*Math.sin(t*1.4);
+  rg.addColorStop(0,c.glow+Math.round(pulse*255).toString(16).padStart(2,'0'));rg.addColorStop(1,'transparent');
   ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
 
+  // Particles
   _vparticles.forEach(p=>{
     if(_vplaying){p.y+=p.vy;p.x+=p.vx;if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}}
-    const fl=0.5+0.5*Math.sin(t*3+p.ph);ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    const fl=0.5+0.5*Math.sin(t*3+p.ph);
+    ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
     ctx.fillStyle=c.gold+Math.round(p.op*fl*160).toString(16).padStart(2,'0');ctx.fill();
   });
 
+  // Sacred geometry rings
   if(t>0.8){
-    const rp=fe(t,0.8,4.0);ctx.save();ctx.translate(W/2,H*0.36);ctx.rotate(t*0.07);
-    ctx.strokeStyle=c.gold+'44';ctx.lineWidth=1.5*s;ctx.beginPath();ctx.arc(0,0,W*0.42,-Math.PI/2,-Math.PI/2+rp*Math.PI*2);ctx.stroke();
-    ctx.rotate(-t*0.14);ctx.strokeStyle=c.acc+'33';ctx.lineWidth=1*s;ctx.beginPath();ctx.arc(0,0,W*0.34,-Math.PI/2+rp*Math.PI*2,-Math.PI/2,true);ctx.stroke();
+    const rp=fe(t,0.8,4.0);
+    ctx.save();ctx.translate(W/2,H*0.36);ctx.rotate(t*0.07);
+    ctx.strokeStyle=c.gold+'44';ctx.lineWidth=1.5*s;
+    ctx.beginPath();ctx.arc(0,0,W*0.42,-Math.PI/2,-Math.PI/2+rp*Math.PI*2);ctx.stroke();
+    ctx.rotate(-t*0.14);ctx.strokeStyle=c.acc+'33';ctx.lineWidth=1*s;
+    ctx.beginPath();ctx.arc(0,0,W*0.34,-Math.PI/2+rp*Math.PI*2,-Math.PI/2,true);ctx.stroke();
     ctx.restore();
   }
 
+  // Ripple on reveal
+  const rpT=t-2.0;
+  if(rpT>0&&rpT<2.5){
+    const rp2=rpT/2.5;
+    ctx.beginPath();ctx.arc(W/2,H*0.36,W*(0.08+rp2*0.45),0,Math.PI*2);
+    ctx.strokeStyle=c.glow+Math.round((1-rp2)*70).toString(16).padStart(2,'0');
+    ctx.lineWidth=(1-rp2)*5*s;ctx.stroke();
+  }
+
+  // Corner ornaments (safe zone)
+  const co=50*s;
   const SAFE=Math.round(86*s);
+  ctx.strokeStyle=c.gold+'33';ctx.lineWidth=2*s;
+  [[SAFE*0.4,SAFE*0.4,1,1],[W-SAFE*0.4,SAFE*0.4,-1,1],
+   [SAFE*0.4,H-SAFE*0.4,1,-1],[W-SAFE*0.4,H-SAFE*0.4,-1,-1]].forEach(([cx,cy,sx,sy])=>{
+    ctx.beginPath();ctx.moveTo(cx+sx*co,cy);ctx.lineTo(cx,cy);ctx.lineTo(cx,cy+sy*co);ctx.stroke();
+  });
+
   ctx.textAlign='center';ctx.textBaseline='alphabetic';
   let y=H*0.10;
 
-  const catA=fe(t,0,0.8);ctx.globalAlpha=catA;
-  const catFS=Math.round(26*s);ctx.font=`400 ${catFS}px 'Tiro Devanagari Sanskrit',serif`;
+  // Category tag (fades in first)
+  const catA=fe(t,0,0.8);
+  ctx.globalAlpha=catA;
+  const catFS=Math.round(26*s);
+  ctx.font=`400 ${catFS}px 'Tiro Devanagari Sanskrit',serif`;
   const catLabel=`${c.sym}  ${TYPES[_type].label}`;
   const catW=ctx.measureText(catLabel).width+Math.round(60*s),catH=Math.round(50*s),catX=W/2-catW/2;
   ctx.fillStyle=c.acc+'20';rr2(catX,y,catW,catH,catH/2);ctx.fill();
   ctx.strokeStyle=c.acc+'66';ctx.lineWidth=1.5*s;rr2(catX,y,catW,catH,catH/2);ctx.stroke();
   sg2(c.glow,14);ctx.fillStyle=c.gold;ctx.fillText(catLabel,W/2,y+catH*0.70);
-  y+=catH+Math.round(20*s);ctx.globalAlpha=1;cg2();
-  
-  const hook=getVal('f-hook');
-  let hookOffset = 0;
-  if(hook){
-    const hFS=Math.round(30*s);const stripH=Math.round(54*s);const stripY=y;
-    const stripGrad=ctx.createLinearGradient(SAFE,stripY,W-SAFE,stripY);
-    stripGrad.addColorStop(0,c.acc+'40'); stripGrad.addColorStop(0.5,c.acc+'28'); stripGrad.addColorStop(1,c.acc+'40');
-    ctx.fillStyle=stripGrad; ctx.fillRect(SAFE,stripY,W-SAFE*2,stripH);
-    sg2(c.glow,18); ctx.font=`700 ${hFS}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.text;
-    ctx.fillText(hook,W/2,stripY+stripH*0.70); cg2();
-    hookOffset = stripH + Math.round(24*s);
-  }
-
-  y += hookOffset;
+  y+=catH+Math.round(20*s);
+  ctx.globalAlpha=1;cg2();
   gl2(SAFE,W-SAFE,y,0.3);y+=Math.round(22*s);
 
-  const fields=getAnimFields(y/H);
+  // Content — type-specific animated reveal
+  const fields=getAnimFields();
   fields.forEach((f,fi)=>{
     if(!f.text)return;
-    const startT=0.8+fi*1.0;const lineA=fe(t,startT,startT+0.7);
+    const startT=0.8+fi*1.0;
+    const lineA=fe(t,startT,startT+0.7);
     if(lineA<=0)return;
     ctx.globalAlpha=lineA;
 
+    // Light streak on reveal
+    const streakT=Math.min(Math.max((t-startT)/0.4,0),1);
+    if(streakT<1){
+      const sx=W/2+(-W*0.5+streakT*W);
+      const sg3=ctx.createLinearGradient(sx-100*s,0,sx+100*s,0);
+      sg3.addColorStop(0,'transparent');sg3.addColorStop(0.5,c.gold+'44');sg3.addColorStop(1,'transparent');
+      ctx.fillStyle=sg3;ctx.fillRect(0,f.y*H-60*s,W,70*s);
+    }
+
     if(f.isLabel){
-      gl2(SAFE,W-SAFE,f.y*H,0.35);sg2(c.glow,14);ctx.font=`400 ${Math.round(20*s)}px 'Tiro Devanagari Sanskrit',serif`;
+      gl2(SAFE,W-SAFE,f.y*H,0.35);
+      sg2(c.glow,14);ctx.font=`400 ${Math.round(20*s)}px 'Tiro Devanagari Sanskrit',serif`;
       ctx.fillStyle=c.acc+'CC';ctx.fillText(f.text,W/2,f.y*H+26*s);cg2();
     } else {
       const lines=wl(f.text,`${f.bold?'700':'600'} ${Math.round(f.fs*s)}px 'Tiro Devanagari Sanskrit',serif`,W*0.82);
-      const lh=f.fs*1.32*s; 
-      const panH=lines.length*lh+32*s;
+      const lh=f.fs*1.22*s;
+      const panH=lines.length*lh+30*s;
       const rowGrad=ctx.createLinearGradient(SAFE,f.y*H,W-SAFE,f.y*H);
-      rowGrad.addColorStop(0,c.acc+'18');rowGrad.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=rowGrad;rr2(SAFE,f.y*H,W-SAFE*2,panH,12*s);ctx.fill();
+      rowGrad.addColorStop(0,c.acc+'18');rowGrad.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=rowGrad;rr2(SAFE,f.y*H,W-SAFE*2,panH,12*s);ctx.fill();
       ctx.strokeStyle=c.gold+(f.bold?'30':'18');ctx.lineWidth=1.5*s;rr2(SAFE,f.y*H,W-SAFE*2,panH,12*s);ctx.stroke();
+      if(f.bold){ctx.fillStyle=c.acc+'BB';ctx.fillRect(SAFE,f.y*H+panH*0.15,4*s,panH*0.7);}
       sg2(f.bold?c.glow:null,f.bold?22:0);
-      ctx.font=`${f.bold?'700':'600'} ${Math.round(f.fs*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=f.bold?c.gold:c.text;
+      ctx.font=`${f.bold?'700':'600'} ${Math.round(f.fs*s)}px 'Tiro Devanagari Sanskrit',serif`;
+      ctx.fillStyle=f.bold?c.gold:c.text;
       lines.forEach((l,li)=>{
-        const la=fe(t,startT+0.25+li*0.2,startT+0.55+li*0.2);ctx.globalAlpha=la;ctx.fillText(l,W/2,f.y*H+32*s+li*lh);
+        const la=fe(t,startT+0.25+li*0.2,startT+0.55+li*0.2);
+        ctx.globalAlpha=la;ctx.fillText(l,W/2,f.y*H+28*s+li*lh);
       });
       ctx.globalAlpha=lineA;cg2();
     }
     ctx.globalAlpha=1;
   });
 
-  const footA=fe(t,VC_DUR-4,VC_DUR-2);ctx.globalAlpha=footA;
-  const fY=H*0.875;gl2(SAFE,W-SAFE,fY,0.25);
-  sg2(c.acc+'66',20);ctx.font=`400 ${Math.round(22*s)}px 'Philosopher',serif`;ctx.fillStyle=c.sub+'88';ctx.fillText(getRotatingCTA(),W/2,fY+Math.round(34*s));
-  sg2(c.glow,35);ctx.fillStyle=c.gold;ctx.font=`400 ${Math.round(52*s)}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillText('विधि चक्र',W/2,fY+Math.round(96*s));
-  ctx.fillStyle=c.sub+'66';ctx.font=`400 ${Math.round(20*s)}px 'Philosopher',serif`;ctx.fillText('VIDHI CHAKRA',W/2,fY+Math.round(122*s));
+  // Footer / CTA
+  const footA=fe(t,VC_DUR-4,VC_DUR-2);
+  ctx.globalAlpha=footA;
+  const fY=H*0.875;
+  gl2(SAFE,W-SAFE,fY,0.25);
+  sg2(c.acc+'66',20);
+  ctx.font=`400 ${Math.round(22*s)}px 'Philosopher',serif`;
+  ctx.fillStyle=c.sub+'88';
+  ctx.fillText(getRotatingCTA(),W/2,fY+Math.round(34*s));
+  sg2(c.glow,35);
+  ctx.fillStyle=c.gold;
+  ctx.font=`400 ${Math.round(52*s)}px 'Tiro Devanagari Sanskrit',serif`;
+  ctx.fillText('विधि चक्र',W/2,fY+Math.round(96*s));
+  ctx.fillStyle=c.sub+'66';
+  ctx.font=`400 ${Math.round(20*s)}px 'Philosopher',serif`;
+  ctx.fillText('VIDHI CHAKRA',W/2,fY+Math.round(122*s));
   ctx.globalAlpha=1;cg2();
 }
 
-function getAnimFields(calculatedTopYFraction){
-  let startYFrac = Math.max(calculatedTopYFraction, 0.24);
-  
+// Map current type inputs to animation fields with y positions
+// For gyan we calculate y dynamically to avoid overlap
+function getAnimFields(){
   if(_type==='gyan'){
     const heading=getVal('f-heading'), source=getVal('f-source');
     const items=[1,2,3,4,5].map(i=>getVal('f-item-'+i)).filter(x=>x);
     const fields=[];
+    let yFrac=0.20;
     if(heading){
       const estLines=Math.max(1,Math.ceil(heading.length/14));
-      fields.push({text:heading,y:startYFrac,fs:46,bold:true});
-      startYFrac+=estLines*0.078+0.03;
+      fields.push({text:heading,y:yFrac,fs:48,bold:true});
+      yFrac+=estLines*0.062+0.025;
     }
     items.forEach((item,idx)=>{
       const estLines=Math.max(1,Math.ceil(item.length/18));
-      fields.push({text:item,y:startYFrac,fs:34,bold:false,num:idx+1});
-      startYFrac+=estLines*0.082+0.025;
+      fields.push({text:item,y:yFrac,fs:34,bold:false,num:idx+1});
+      yFrac+=estLines*0.068+0.018;
     });
-    if(source) fields.push({text:': '+source+' :',y:Math.min(startYFrac,0.82),fs:18,bold:false});
+    if(source) fields.push({text:'— '+source+' —',y:Math.min(yFrac,0.82),fs:18,bold:false});
     return fields;
   }
   if(_type==='upay') return[
-    {text:getVal('f-problem'),y:startYFrac,fs:42,bold:true},
-    {text:getVal('f-body'),y:startYFrac + 0.14,fs:32,bold:false},
-    {text:getVal('f-note'),y:startYFrac + 0.44,fs:24,bold:false},
+    {text:getVal('f-problem'),y:0.26,fs:42,bold:true},
+    {text:getVal('f-body'),y:0.42,fs:32,bold:false},
+    {text:getVal('f-note'),y:0.74,fs:24,bold:false},
   ];
   if(_type==='prashna') return[
-    {text:getVal('f-question'),y:startYFrac,fs:42,bold:true},
-    {text:getVal('f-answer'),y:startYFrac + 0.22,fs:34,bold:false},
+    {text:getVal('f-question'),y:0.24,fs:42,bold:true},
+    {text:'?',y:0.50,fs:90,bold:true},
+    {text:getVal('f-answer'),y:0.60,fs:34,bold:false},
   ];
   if(_type==='mantra') return[
-    {text:getVal('f-mantra'),y:startYFrac,fs:54,bold:true},
-    {text:': अर्थ :',y:startYFrac + 0.20,fs:20,bold:false,isLabel:true},
-    {text:getVal('f-artha'),y:startYFrac + 0.25,fs:34,bold:false},
+    {text:getVal('f-mantra'),y:0.26,fs:56,bold:true},
+    {text:'— अर्थ —',y:0.52,fs:20,bold:false,isLabel:true},
+    {text:getVal('f-artha'),y:0.56,fs:34,bold:false},
   ];
   if(_type==='rashi') return[
-    {text:getVal('f-rashi'),y:startYFrac,fs:68,bold:true},
-    {text:getVal('f-keyword'),y:startYFrac + 0.16,fs:28,bold:false},
-    {text:getVal('f-body'),y:startYFrac + 0.26,fs:34,bold:false},
+    {text:getVal('f-rashi'),y:0.24,fs:70,bold:true},
+    {text:getVal('f-keyword'),y:0.44,fs:28,bold:false},
+    {text:getVal('f-body'),y:0.54,fs:34,bold:false},
   ];
   if(_type==='tathya') return[
-    {text:getVal('f-number'),y:startYFrac,fs:90,bold:true},
-    {text:getVal('f-heading'),y:startYFrac + 0.18,fs:42,bold:true},
-    {text:getVal('f-body'),y:startYFrac + 0.32,fs:32,bold:false},
+    {text:getVal('f-number'),y:0.22,fs:110,bold:true},
+    {text:getVal('f-heading'),y:0.46,fs:44,bold:true},
+    {text:getVal('f-body'),y:0.60,fs:32,bold:false},
   ];
-  return [];
+  return[];
 }
 
 function vcSaveFrame(){
   const cv=document.getElementById('anim-cv'); if(!cv)return;
   const win=window.open('','_blank');
   if(win){
-    win.document.write('<html><body style="margin:0;background:#000;display:flex;justify-content:center;"><img src="'+cv.toDataURL('image/png')+'"/></body></html>');
+    win.document.write('<html><head><title>विधि चक्र Frame</title><style>body{margin:0;background:#000;display:flex;flex-direction:column;align-items:center;padding:16px;font-family:sans-serif;color:#FFD860}img{max-width:100%;border-radius:8px}p{font-size:13px;margin-top:12px;text-align:center;opacity:0.7}</style></head><body>');
+    win.document.write('<p>📱 Long-press image → Save to Photos</p>');
+    win.document.write('<img src="'+cv.toDataURL('image/png')+'"/>');
+    win.document.write('</body></html>');
     win.document.close();
   }
 }
 
-let _recorder=null, _recChunks=[];
+// ════════════════════════════════════════════
+// WEBM RECORDER
+// ════════════════════════════════════════════
+let _recorder=null, _recChunks=[], _recPlaying=false;
 
 function vcStartRecord(){
   const cv=document.getElementById('anim-cv');
   const btn=document.getElementById('vc-rec-btn');
   const status=document.getElementById('vc-rec-status');
 
-  if(_recorder&&_recorder.state==='recording'){ _recorder.stop(); return; }
-  if(!cv.captureStream){ status.textContent='❌ Unsupported'; return; }
+  // If already recording — stop
+  if(_recorder&&_recorder.state==='recording'){
+    _recorder.stop();
+    return;
+  }
 
-  vcReset();_recChunks=[];
+  // Check support
+  if(!cv.captureStream){
+    status.textContent='❌ WebM not supported on this browser — use screen recorder instead';
+    status.style.color='var(--red)';
+    return;
+  }
+
+  // Start fresh animation
+  vcReset();
+  _recChunks=[];
+
   try{
     const stream=cv.captureStream(30);
-    const mimeType=MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+    const mimeType=MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
+      ?'video/webm;codecs=vp9'
+      :MediaRecorder.isTypeSupported('video/webm')
+      ?'video/webm':'';
+
+    if(!mimeType){
+      status.textContent='❌ WebM encoding not supported — use screen recorder';
+      status.style.color='var(--red)';
+      return;
+    }
+
     _recorder=new MediaRecorder(stream,{mimeType,videoBitsPerSecond:8000000});
+
     _recorder.ondataavailable=e=>{if(e.data&&e.data.size>0)_recChunks.push(e.data);};
+
     _recorder.onstop=()=>{
       btn.textContent='⏺ Record WebM';
+      btn.style.color='';
+      status.textContent='✓ Processing...';
       const blob=new Blob(_recChunks,{type:'video/webm'});
       const url=URL.createObjectURL(blob);
-      const a=document.createElement('a');a.href=url;a.download=`vidhichakra-${Date.now()}.webm`;
-      document.body.appendChild(a);a.click();status.textContent='✅ Downloaded!';
+      const a=document.createElement('a');
+      a.href=url;
+      a.download=`vidhichakra-${_type}-${Date.now()}.webm`;
+      document.body.appendChild(a);a.click();
+      setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},500);
+      status.textContent='✅ Downloaded! Open in gallery or share directly.';
+      status.style.color='var(--green)';
     };
-    _recorder.start(100);btn.textContent='⏹ Stop';vcPlay();
-  }catch(e){status.textContent='❌ Error: '+e.message;}
+
+    _recorder.start(100); // collect data every 100ms
+    btn.textContent='⏹ Stop & Download';
+    btn.style.color='var(--red)';
+    status.textContent='🔴 Recording... play the animation now';
+    status.style.color='var(--red)';
+
+    // Auto-play animation
+    vcPlay();
+
+    // Auto-stop when animation ends
+    const autoStop=setInterval(()=>{
+      if(!_vplaying&&_recorder&&_recorder.state==='recording'){
+        _recorder.stop();
+        clearInterval(autoStop);
+      }
+    },500);
+
+  }catch(e){
+    status.textContent='❌ Error: '+e.message;
+    status.style.color='var(--red)';
+  }
 }
 
-function openSmartPaste(){ document.getElementById('sp-modal').style.display='block'; document.getElementById('sp-input').focus(); }
-function closeSmartPaste(){ document.getElementById('sp-modal').style.display='none'; }
+// ════════════════════════════════════════════
+// SMART PASTE
+// ════════════════════════════════════════════
+function openSmartPaste(){
+  document.getElementById('sp-modal').style.display='block';
+  document.getElementById('sp-input').focus();
+}
+function closeSmartPaste(){
+  document.getElementById('sp-modal').style.display='none';
+}
 
 function smartParseText(raw){
   const lines=raw.split('\n').map(l=>l.trim()).filter(l=>l);
   const result={heading:'',items:[],source:''};
-  const isNumberedLine=l=>/^[१२३४५६७८९1-5][\.\)]\s/.test(l)||/^[•\-–:]\s/.test(l);
-  const stripNum=l=>l.replace(/^[१२३४५६७८९1-5][\.\)]\s*/,'').replace(/^[•\-–:]\s*/,'').trim();
+
+  // Nepali/English number patterns and bullet patterns
+  const neNumMap={'१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'};
+  const isNumberedLine=l=>{
+    // १. or 1. or १) or 1) or • or - or – at start
+    return /^[१२३४५६७८९1-5][\.\)]\s/.test(l)||/^[•\-–]\s/.test(l);
+  };
+  const stripNum=l=>l.replace(/^[१२३४५६७८९1-5][\.\)]\s*/,'').replace(/^[•\-–]\s*/,'').trim();
   const isSource=l=>/^(स्रोत|source|ref|सन्दर्भ)\s*[:\-]/i.test(l);
 
   lines.forEach(l=>{
-    if(isSource(l)){ result.source=l.replace(/^(स्रोत|source|ref|सन्दर्भ)\s*[:\-]\s*/i,'').trim(); } 
-    else if(isNumberedLine(l)){ if(result.items.length<5) result.items.push(stripNum(l)); } 
-    else if(!result.heading){ if(l.length<=80) result.heading=l; else if(result.items.length<5) result.items.push(l); } 
-    else { if(result.items.length<5) result.items.push(l); }
+    if(isSource(l)){
+      result.source=l.replace(/^(स्रोत|source|ref|सन्दर्भ)\s*[:\-]\s*/i,'').trim();
+    } else if(isNumberedLine(l)){
+      if(result.items.length<5) result.items.push(stripNum(l));
+    } else if(!result.heading){
+      // First non-numbered, non-source line = heading
+      // Unless it looks like body text (>60 chars)
+      if(l.length<=80) result.heading=l;
+      else if(result.items.length<5) result.items.push(l); // long line = item
+    } else {
+      // Additional plain lines go to items if we have room
+      if(result.items.length<5) result.items.push(l);
+    }
   });
+
   return result;
 }
 
 function smartParsePeview(){
-  const raw=document.getElementById('sp-input').value;if(!raw.trim()) return;
-  const r=smartParseText(raw);const pv=document.getElementById('sp-preview');pv.style.display='block';
-  pv.innerHTML=`<div style="color:var(--gold);margin-bottom:4px">Heading:</div><div>${r.heading||'—'}</div>`;
+  const raw=document.getElementById('sp-input').value;
+  if(!raw.trim()) return;
+  const r=smartParseText(raw);
+  const pv=document.getElementById('sp-preview');
+  pv.style.display='block';
+  pv.innerHTML=`
+    <div style="color:var(--gold);margin-bottom:4px">Heading:</div>
+    <div style="color:var(--text);margin-bottom:8px">${r.heading||'<span style="color:var(--dim)">— not detected —</span>'}</div>
+    <div style="color:var(--gold);margin-bottom:4px">Items:</div>
+    ${r.items.length?r.items.map((item,i)=>`<div style="color:var(--text);margin-bottom:3px"><span style="color:var(--acc)">${i+1}.</span> ${item}</div>`).join(''):'<span style="color:var(--dim)">— none detected —</span>'}
+    ${r.source?`<div style="color:var(--gold);margin-top:8px;margin-bottom:4px">Source:</div><div style="color:var(--text)">${r.source}</div>`:''}
+  `;
 }
 
 function smartPasteApply(){
-  const raw=document.getElementById('sp-input').value;if(!raw.trim()) return;
+  const raw=document.getElementById('sp-input').value;
+  if(!raw.trim()) return;
   const r=smartParseText(raw);
+
+  // Fill fields of whichever tab is currently active — don't switch tabs
   setTimeout(()=>{
     if(_type==='gyan'){
-      if(r.heading) document.getElementById('f-heading').value=r.heading;
-      r.items.forEach((item,i)=>{if(document.getElementById('f-item-'+(i+1))) document.getElementById('f-item-'+(i+1)).value=item;});
-      if(r.source) document.getElementById('f-source').value=r.source;
+      if(r.heading){const el=document.getElementById('f-heading');if(el)el.value=r.heading;}
+      r.items.forEach((item,i)=>{const el=document.getElementById('f-item-'+(i+1));if(el)el.value=item;});
+      for(let i=r.items.length+1;i<=5;i++){const el=document.getElementById('f-item-'+i);if(el)el.value='';}
+      if(r.source){const el=document.getElementById('f-source');if(el)el.value=r.source;}
     } else if(_type==='upay'){
-      if(r.heading) document.getElementById('f-problem').value=r.heading;
-      document.getElementById('f-body').value=r.items.join('\n');
+      if(r.heading){const el=document.getElementById('f-problem');if(el)el.value=r.heading;}
+      // Join items as separate lines in the body textarea
+      const body=r.items.join('\n');
+      const bel=document.getElementById('f-body');if(bel)bel.value=body;
+      if(r.source){const el=document.getElementById('f-note');if(el)el.value=r.source;}
     } else if(_type==='prashna'){
-      if(r.heading) document.getElementById('f-question').value=r.heading;
-      if(r.items.length) document.getElementById('f-answer').value=r.items.join(' ');
+      if(r.heading){const el=document.getElementById('f-question');if(el)el.value=r.heading;}
+      if(r.items.length){const el=document.getElementById('f-answer');if(el)el.value=r.items.join(' ');}
+    } else if(_type==='mantra'){
+      if(r.heading){const el=document.getElementById('f-mantra');if(el)el.value=r.heading;}
+      if(r.items.length){const el=document.getElementById('f-artha');if(el)el.value=r.items.join(' ');}
+    } else if(_type==='rashi'){
+      if(r.heading){const el=document.getElementById('f-rashi');if(el)el.value=r.heading;}
+      if(r.items.length){const el=document.getElementById('f-body');if(el)el.value=r.items.join('\n');}
+    } else if(_type==='tathya'){
+      if(r.heading){const el=document.getElementById('f-heading');if(el)el.value=r.heading;}
+      if(r.items.length){const el=document.getElementById('f-body');if(el)el.value=r.items.join('\n');}
     }
-    renderCard(); closeSmartPaste();
+    renderCard();
+    closeSmartPaste();
   },50);
 }
 
-function triggerCSVTarget() { document.getElementById('batch-file-input').click(); }
-
-function handleBatchFile(input) {
-  const file = input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const text = e.target.result;
-    if (file.name.endsWith('.json')) { parseBatchJSON(text); } else { parseBatchCSV(text); }
-  };
-  reader.readAsText(file);
-}
-
-function parseBatchCSV(text) {
-  _batchData = [];const lines = text.split(/\r?\n/);if (lines.length < 2) return;
-  const headers = lines[0].split(',').map(h => h.trim().replace(/["']/g, ''));
-  for (let i = 1; i < lines.length; i++) {
-    if (!lines[i].trim()) continue;
-    const values = lines[i].split(',').map(v => v.trim().replace(/["']/g, ''));let entry = {};
-    headers.forEach((header, idx) => { if (values[idx]) entry[header] = values[idx]; });
-    _batchData.push(entry);
-  }
-  if (_batchData.length > 0) initBatchMode();
-}
-
-function parseBatchJSON(text) {
-  try { const data = JSON.parse(text); _batchData = Array.isArray(data) ? data : [data]; initBatchMode(); } 
-  catch (e) { alert("JSON Structural Error"); }
-}
-
-function initBatchMode() { _batchCurrentIndex = 0; document.getElementById('batch-nav-container').style.display = 'flex'; applyBatchRowToInputs(); }
-
-function navigateBatch(direction) {
-  if (_batchData.length === 0) return; _batchCurrentIndex += direction;
-  if (_batchCurrentIndex >= _batchData.length) _batchCurrentIndex = 0;
-  if (_batchCurrentIndex < 0) _batchCurrentIndex = _batchData.length - 1;
-  applyBatchRowToInputs();
-}
-
-function applyBatchRowToInputs() {
-  const row = _batchData[_batchCurrentIndex];
-  document.getElementById('batch-index-display').textContent = `Post ${_batchCurrentIndex + 1} of ${_batchData.length}`;
-  
-  if (row.hook) document.getElementById('f-hook').value = row.hook;
-
-  if (_type === 'gyan') {
-    if (row.heading) document.getElementById('f-heading').value = row.heading;
-    for (let i = 1; i <= 5; i++) {
-      const field = document.getElementById(`f-item-${i}`);
-      if (field) field.value = row[`item${i}`] || row[`item_${i}`] || '';
-    }
-    if (row.source) document.getElementById('f-source').value = row.source;
-  } 
-  else if (_type === 'upay') {
-    if (row.problem || row.heading) document.getElementById('f-problem').value = row.problem || row.heading;
-    if (row.body || row.remedy) document.getElementById('f-body').value = row.body || row.remedy;
-    if (row.note) document.getElementById('f-note').value = row.note;
-  }
-  else if (_type === 'prashna') {
-    if (row.question || row.heading) document.getElementById('f-question').value = row.question || row.heading;
-    if (row.answer || row.body) document.getElementById('f-answer').value = row.answer || row.body;
-  }
-  else if (_type === 'mantra') {
-    if (row.mantra) document.getElementById('f-mantra').value = row.mantra;
-    if (row.artha) document.getElementById('f-artha').value = row.artha;
-  }
-  else if (_type === 'rashi') {
-    if (row.rashi) document.getElementById('f-rashi').value = row.rashi;
-    if (row.keyword) document.getElementById('f-keyword').value = row.keyword;
-    if (row.body) document.getElementById('f-body').value = row.body;
-  }
-  else if (_type === 'tathya') {
-    if (row.number) document.getElementById('f-number').value = row.number;
-    if (row.heading) document.getElementById('f-heading').value = row.heading;
-    if (row.body) document.getElementById('f-body').value = row.body;
-  }
-  renderCard(); if (_view === 'anim') vcReset();
-}
-
+// ════════════════════════════════════════════
+// HOOK ZONE — rendered as accent strip on card
+// ════════════════════════════════════════════
 function drawHook(ctx,W,H,s,c,sg,cg,SAFE){
-  const hook=getVal('f-hook'); if(!hook) return 0;
-  const hFS=Math.round(30*s);const stripH=Math.round(54*s);const stripY=H*0.10+Math.round(54*s);
+  const hook=getVal('f-hook');
+  if(!hook) return 0;
+  // Small colored strip at very top of content area
+  const hFS=Math.round(30*s);
+  const stripH=Math.round(54*s);
+  const stripY=H*0.10+Math.round(54*s); // just below category pill
+  // Background strip
   const stripGrad=ctx.createLinearGradient(SAFE,stripY,W-SAFE,stripY);
   stripGrad.addColorStop(0,c.acc+'40'); stripGrad.addColorStop(0.5,c.acc+'28'); stripGrad.addColorStop(1,c.acc+'40');
-  ctx.fillStyle=stripGrad; ctx.fillRect(SAFE,stripY,W-SAFE*2,stripH);
-  sg(c.glow,18); ctx.font=`700 ${hFS}px 'Tiro Devanagari Sanskrit',serif`;ctx.fillStyle=c.text;
-  ctx.fillText(hook,W/2,stripY+stripH*0.70); cg();
-  return stripH;
+  ctx.fillStyle=stripGrad;
+  ctx.fillRect(SAFE,stripY,W-SAFE*2,stripH);
+  ctx.strokeStyle=c.acc+'66'; ctx.lineWidth=1.5*s;
+  ctx.strokeRect(SAFE,stripY,W-SAFE*2,stripH);
+  sg(c.glow,18);
+  ctx.font=`700 ${hFS}px 'Tiro Devanagari Sanskrit',serif`;
+  ctx.fillStyle=c.text;
+  ctx.textAlign='center'; ctx.textBaseline='alphabetic';
+  ctx.fillText(hook,W/2,stripY+stripH*0.70);
+  cg();
+  return stripH+Math.round(10*s); // extra y consumed
 }
 
-const CTAS=['Save गर्नुहोस् 📌 • Follow गर्नुहोस्','साथीलाई share गर्नुहोस् 🙏','Daily ज्ञानको लागि Follow गर्नुहोस् ✨'];
+// ════════════════════════════════════════════
+// ROTATING CTA
+// ════════════════════════════════════════════
+const CTAS=[
+  'Save गर्नुहोस् 📌  •  Follow गर्नुहोस्',
+  'साथीलाई share गर्नुहोस् 🙏',
+  'Daily ज्ञानको लागि Follow गर्नुहोस् ✨',
+  'Comment गर्नुहोस् — के सोच्नुभयो?',
+  'कसैलाई Tag गर्नुहोस् जसलाई चाहिन्छ',
+  'Save now, read later 📖',
+  'भुल्नु अघि Save गर्नुहोस् ⭐',
+  'Follow — विधि चक्र 🔱',
+];
 function getRotatingCTA(){
+  // Rotates daily so it changes each day but is consistent within a session
   const dayOfYear=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/(864e5));
   return CTAS[dayOfYear%CTAS.length];
 }
 
+// ════════════════════════════════════════════
+// WORD COUNT DETECTOR
+// ════════════════════════════════════════════
 function updateWordCount(){
-  const bar=document.getElementById('word-count-bar');if(!bar||_type!=='gyan') return;
-  const texts=[getVal('f-hook'), getVal('f-heading'), ...[1,2,3,4,5].map(i=>getVal('f-item-'+i))].filter(x=>x).join(' ');
+  const bar=document.getElementById('word-count-bar');
+  if(!bar||_type!=='gyan') return;
+  const texts=[
+    getVal('f-hook'),
+    getVal('f-heading'),
+    ...[1,2,3,4,5].map(i=>getVal('f-item-'+i)),
+  ].filter(x=>x).join(' ');
   const words=texts.split(/\s+/).filter(w=>w.length>0).length;
-  if(words===0){bar.style.display='none';return;} bar.style.display='block';
-  const numEl=document.getElementById('word-count-num');const fill=document.getElementById('word-count-fill');
-  fill.style.width=Math.min(100,Math.round(words/70*100))+'%';numEl.textContent=words+' words';updateQualityScore();
+  if(words===0){bar.style.display='none';return;}
+  bar.style.display='block';
+  const numEl=document.getElementById('word-count-num');
+  const fill=document.getElementById('word-count-fill');
+  const msg=document.getElementById('word-count-msg');
+  const pct=Math.min(100,Math.round(words/70*100));
+  fill.style.width=pct+'%';
+  if(words<=40){
+    fill.style.background='var(--green)';
+    numEl.style.color='var(--green)'; numEl.textContent=words+' words ✓';
+    msg.style.color='var(--green)'; msg.textContent='Perfect — clear and readable';
+  } else if(words<=70){
+    fill.style.background='var(--amber)';
+    numEl.style.color='var(--amber)'; numEl.textContent=words+' words ⚠';
+    msg.style.color='var(--amber)'; msg.textContent='Getting long — keep it under 70 words';
+  } else {
+    fill.style.background='var(--red)';
+    numEl.style.color='var(--red)'; numEl.textContent=words+' words ✗';
+    msg.style.color='var(--red)'; msg.textContent='Too much text — reduce for better reach. Aim under 70 words.';
+  }
+  updateQualityScore();
 }
 
+// ════════════════════════════════════════════
+// QUALITY SCORE
+// ════════════════════════════════════════════
 function updateQualityScore(){
-  const panel=document.getElementById('quality-panel');if(_type!=='gyan'){if(panel)panel.style.display='none';return;}
-  if(panel)panel.style.display='block';const scoreEl=document.getElementById('qs-score');if(scoreEl) scoreEl.textContent='85/100';
+  const panel=document.getElementById('quality-panel');
+  if(_type!=='gyan'){if(panel)panel.style.display='none';return;}
+  if(panel)panel.style.display='block';
+
+  const hook=getVal('f-hook');
+  const heading=getVal('f-heading');
+  const items=[1,2,3,4,5].map(i=>getVal('f-item-'+i)).filter(x=>x);
+  const allText=[hook,heading,...items].filter(x=>x).join(' ');
+  const words=allText.split(/\s+/).filter(w=>w).length;
+  const hasEmoji=/[\u{1F300}-\u{1FFFF}⚠️🔥❓✨]/u.test(hook+heading);
+
+  const checks=[
+    {label:'Hook छ (scroll stopper)', pass:!!hook},
+    {label:'Heading छ (main topic)', pass:!!heading},
+    {label:'कम्तिमा २ बुँदाहरू छन्', pass:items.length>=2},
+    {label:'Word count ठीक छ (≤70)', pass:words<=70},
+    {label:'Emoji / visual cue छ', pass:hasEmoji},
+    {label:'Source/credibility छ', pass:!!getVal('f-source')},
+  ];
+  const score=Math.round(checks.filter(c=>c.pass).length/checks.length*100);
+
+  const scoreEl=document.getElementById('qs-score');
+  const checksEl=document.getElementById('qs-checks');
+  if(!scoreEl||!checksEl) return;
+
+  scoreEl.textContent=score+'/100';
+  scoreEl.style.color=score>=80?'var(--green)':score>=50?'var(--amber)':'var(--red)';
+
+  checksEl.innerHTML=checks.map(c=>`
+    <div style="color:${c.pass?'var(--green)':'var(--muted)'}">
+      ${c.pass?'✓':'○'} ${c.label}
+    </div>`).join('');
 }
 
+// ════════════════════════════════════════════
+// AI OPTIMIZE (Claude API)
+// ════════════════════════════════════════════
 async function aiOptimize(){
-  const btn=document.getElementById('ai-opt-btn');const result=document.getElementById('ai-opt-result');if(!result) return;
+  const btn=document.getElementById('ai-opt-btn');
+  const result=document.getElementById('ai-opt-result');
+  if(!result) return;
+
+  const hook=getVal('f-hook');
+  const heading=getVal('f-heading');
+  const items=[1,2,3,4,5].map(i=>getVal('f-item-'+i)).filter(x=>x);
+
+  if(!heading&&!items.length){alert('पहिले heading र कम्तिमा एउटा बुँदा लेख्नुहोस्।');return;}
+
   btn.textContent='⏳ Optimizing...'; btn.disabled=true;
-  setTimeout(() => {
+  result.style.display='none';
+
+  const prompt=`You are a Nepali social media content optimizer for the Vidhi Chakra channel (Jyotish, Vedic knowledge, Sanatan Dharma).
+
+Current content:
+Hook: ${hook||'(none)'}
+Heading: ${heading||'(none)'}
+Items: ${items.map((x,i)=>`${i+1}. ${x}`).join('\n')||'(none)'}
+
+Optimize for Facebook/TikTok reels. Respond in this exact format:
+
+HOOK: [improved hook in Nepali, under 8 words, with emoji, scroll-stopping]
+HEADING: [improved heading in Nepali/Sanskrit, bold and clear]
+ITEMS:
+1. [point 1]
+2. [point 2]
+3. [point 3 if applicable]
+REASON: [1 line why these changes help]
+
+Rules: Keep Nepali language. Keep Vedic/spiritual authenticity. Make hook curiosity-triggering. Keep each point under 15 words.`;
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:600,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await resp.json();
+    const text=data.content?.[0]?.text||'';
+
     result.style.display='block';
-    result.innerHTML=`<div style="color:var(--gold); font-weight:700">✨ एआई सुझाव :</div>
-    <div>हुक: ⚠️ धेरैले यो ज्योतिषीय रहस्य बेवास्ता गर्छन्!</div>
-    <button onclick="applyAiSuggestions()" class="btn btn-gold" style="width:100%;margin-top:10px;font-size:12px">✓ Apply Script</button>`;
-    btn.textContent='✨ AI Optimize : Improve Content'; btn.disabled=false;
-  }, 1200);
+    result.innerHTML=text.split('\n').filter(l=>l.trim()).map(l=>{
+      if(l.startsWith('HOOK:')||l.startsWith('HEADING:')||l.startsWith('REASON:')){
+        return`<div style="color:var(--gold);font-weight:700">${l}</div>`;
+      }
+      return`<div>${l}</div>`;
+    }).join('');
+
+    // Add apply button
+    result.innerHTML+=`<button onclick="applyAiSuggestions()" class="btn btn-gold" style="width:100%;margin-top:10px;font-size:12px">✓ Apply These Changes</button>`;
+    result._rawText=text;
+
+  }catch(e){
+    result.style.display='block';
+    result.innerHTML=`<span style="color:var(--red)">Error: ${e.message}</span>`;
+  }
+  btn.textContent='✨ AI Optimize — Improve with Claude'; btn.disabled=false;
 }
 
-function applyAiSuggestions(){ document.getElementById('f-hook').value = "⚠️ धेरैले यो ज्योतिषीय रहस्य बेवास्ता गर्छन्!"; renderCard(); }
+function applyAiSuggestions(){
+  const result=document.getElementById('ai-opt-result');
+  if(!result?._rawText) return;
+  const text=result._rawText;
 
-// DYNAMIC MONITOR ENGINE FOR FONT FACE LOAD DEFENSE
-window.addEventListener('load', () => {
-  document.fonts.ready.then(() => {
-    setTimeout(() => {
-      buildInputs();
-      buildSuggestions();
-      renderCard();
-    }, 250);
-  });
+  const hookM=text.match(/HOOK:\s*(.+)/);
+  const headM=text.match(/HEADING:\s*(.+)/);
+  const itemsM=[...text.matchAll(/^\d+\.\s*(.+)/gm)].map(m=>m[1].trim());
+
+  if(hookM?.[1]){const el=document.getElementById('f-hook');if(el)el.value=hookM[1].trim();}
+  if(headM?.[1]){const el=document.getElementById('f-heading');if(el)el.value=headM[1].trim();}
+  itemsM.forEach((item,i)=>{const el=document.getElementById('f-item-'+(i+1));if(el)el.value=item;});
+
+  renderCard(); updateWordCount();
+  result.innerHTML='<span style="color:var(--green)">✓ Applied! Check the preview.</span>';
+}
+
+// Hook the quality score into setType and renderCard
+const _origSetType=window.setType;
+window.setType=function(t,btn){
+  _type=t;
+  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildInputs();
+  buildSuggestions();
+  renderCard();
+  setTimeout(()=>{updateWordCount();updateQualityScore();},50);
+};
+
+// ════════════════════════════════════════════
+// FACTORY BATCH ENGINE
+// ════════════════════════════════════════════
+let _batchData=[], _batchCurrentIndex=0;
+
+function handleBatchFile(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const text=e.target.result;
+    if(file.name.endsWith('.json')) parseBatchJSON(text);
+    else parseBatchCSV(text);
+  };
+  reader.readAsText(file);
+}
+
+function parseBatchCSV(text){
+  _batchData=[];
+  const lines=text.split(/\r?\n/); if(lines.length<2) return;
+  const headers=lines[0].split(',').map(h=>h.trim().replace(/["']/g,''));
+  for(let i=1;i<lines.length;i++){
+    if(!lines[i].trim()) continue;
+    const values=lines[i].split(',').map(v=>v.trim().replace(/["']/g,''));
+    const entry={};
+    headers.forEach((header,idx)=>{if(values[idx]) entry[header]=values[idx];});
+    _batchData.push(entry);
+  }
+  if(_batchData.length>0) initBatchMode();
+}
+
+function parseBatchJSON(text){
+  try{
+    const data=JSON.parse(text);
+    _batchData=Array.isArray(data)?data:[data];
+    initBatchMode();
+  }catch(e){alert('JSON parse error: '+e.message);}
+}
+
+function initBatchMode(){
+  _batchCurrentIndex=0;
+  document.getElementById('batch-nav-container').style.display='flex';
+  applyBatchRow();
+}
+
+function navigateBatch(dir){
+  if(!_batchData.length) return;
+  _batchCurrentIndex+=dir;
+  if(_batchCurrentIndex>=_batchData.length) _batchCurrentIndex=0;
+  if(_batchCurrentIndex<0) _batchCurrentIndex=_batchData.length-1;
+  applyBatchRow();
+}
+
+function applyBatchRow(){
+  const row=_batchData[_batchCurrentIndex];
+  document.getElementById('batch-index-display').textContent=`Post ${_batchCurrentIndex+1} of ${_batchData.length}`;
+  // Global hook
+  if(row.hook){const el=document.getElementById('f-hook');if(el)el.value=row.hook;}
+  // Per-type fields
+  if(_type==='gyan'){
+    if(row.heading){const el=document.getElementById('f-heading');if(el)el.value=row.heading;}
+    for(let i=1;i<=5;i++){const el=document.getElementById(`f-item-${i}`);if(el)el.value=row[`item${i}`]||row[`item_${i}`]||'';}
+    if(row.source){const el=document.getElementById('f-source');if(el)el.value=row.source;}
+  } else if(_type==='upay'){
+    if(row.problem||row.heading){const el=document.getElementById('f-problem');if(el)el.value=row.problem||row.heading;}
+    if(row.body||row.remedy){const el=document.getElementById('f-body');if(el)el.value=row.body||row.remedy;}
+    if(row.note){const el=document.getElementById('f-note');if(el)el.value=row.note;}
+  } else if(_type==='prashna'){
+    if(row.question||row.heading){const el=document.getElementById('f-question');if(el)el.value=row.question||row.heading;}
+    if(row.answer||row.body){const el=document.getElementById('f-answer');if(el)el.value=row.answer||row.body;}
+  } else if(_type==='mantra'){
+    if(row.mantra){const el=document.getElementById('f-mantra');if(el)el.value=row.mantra;}
+    if(row.artha){const el=document.getElementById('f-artha');if(el)el.value=row.artha;}
+  } else if(_type==='rashi'){
+    if(row.rashi){const el=document.getElementById('f-rashi');if(el)el.value=row.rashi;}
+    if(row.keyword){const el=document.getElementById('f-keyword');if(el)el.value=row.keyword;}
+    if(row.body){const el=document.getElementById('f-body');if(el)el.value=row.body;}
+  } else if(_type==='tathya'){
+    if(row.number){const el=document.getElementById('f-number');if(el)el.value=row.number;}
+    if(row.heading){const el=document.getElementById('f-heading');if(el)el.value=row.heading;}
+    if(row.body){const el=document.getElementById('f-body');if(el)el.value=row.body;}
+  }
+  renderCard();
+  if(_view==='anim') vcReset();
+}
+
+// ── INIT — wait for fonts to load before first render ──
+let _type='gyan', _theme='shakti';
+buildInputs();
+buildSuggestions();
+document.fonts.ready.then(()=>{
+  setTimeout(()=>{
+    renderCard();
+    updateQualityScore();
+  },150);
 });
-
-window.addEventListener('resize', () => {
-  if (_view === 'static') { renderCard(); } else { vcReset(); }
+window.addEventListener('resize',()=>{
+  if(_view==='static') renderCard(); else vcReset();
 });
 </script>
 </body>
