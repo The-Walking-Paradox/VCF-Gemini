@@ -34,6 +34,7 @@ body{background:var(--bg);color:var(--text);font-family:'EB Garamond',serif;min-
 .field input,.field textarea,.field select{width:100%;background:var(--bg3);border:1px solid var(--dim);border-radius:6px;padding:10px 12px;color:var(--text);font-family:'Tiro Devanagari Sanskrit',serif;font-size:15px;outline:none;line-height:1.6;transition:border-color .2s}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}
 .field textarea{resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
 /* ── COLOR THEME SELECTOR ── */
 .theme-row{display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 14px}
@@ -143,10 +144,10 @@ canvas#cv{width:100%;height:100%;display:block}
   </div>
 </div>
 
-<!-- GLOBAL HOOK CONTAINER REQUIRED ACCROSS ALL WORKFLOWS -->
+<!-- GLOBAL UNIVERSAL HOOK INPUT FIELD -->
 <div class="inputs" style="padding-bottom: 0;">
   <div class="field" style="margin-bottom:6px">
-    <label style="color:var(--acc)">⚡ Universal Hook : (Pattern Interrupt - Global)</label>
+    <label style="color:var(--acc)">⚡ Universal Hook : (Pattern Interrupt - Global Across Tabs)</label>
     <input id="f-hook" placeholder="जैसे: ⚠️ ९५% मानिसलाई थाहा छैन..." oninput="renderCard();updateWordCount()"/>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px" id="hook-suggestions">
       ${['⚠️ ९५% मानिसलाई थाहा छैन','🔥 धेरैले बेवास्ता गर्छन्','❓ के तपाईंलाई थाहा छ?','🪐 यो कुरा धेरैलाई थाहा छैन'].map(h=>`<span onclick="document.getElementById('f-hook').value='${h}';renderCard();updateWordCount()" style="cursor:pointer;font-size:11px;background:var(--bg3);border:1px solid var(--dim);padding:4px 8px;border-radius:12px;color:var(--muted);font-family:'Tiro Devanagari Sanskrit',serif">${h}</span>`).join('')}
@@ -224,7 +225,7 @@ const THEMES = {
 
 const TYPES = {
   gyan:    {label:'ज्ञान',fields:['heading','body','source'],headingPH:'जैसे: शनि ग्रहको प्रभाव',sourcePH:'जैसे: बृहत्पाराशर होरा शास्त्र'},
-  upay:    {label:'उपाय',fields:['problem','body','note'],headingPH:'जैसे: घरमा नकारात्मक ऊर्जा',bodyPH:'उपाय वा समाधान नेपालीमा...',notePH:'जैसे: हरेक मंगलबार गर्नुहोस्'},
+  upay:    {label:'उपाय',fields:['problem','body','note'],headingPH:'जैसे: घरमा नकारात्मक ऊर्जा',bodyPH:'उपाय वा समाधान नेपालीमा प्रत्येक नयाँ लाइनमा...',notePH:'जैसे: हरेक मंगलबार गर्नुहोस्'},
   prashna: {label:'प्रश्न',fields:['question','answer'],questionPH:'जैसे: जन्म कुण्डलीमा ९ भाव के हो?',answerPH:'उत्तर वा रोचक तथ्य नेपालीमा...'},
   mantra:  {label:'मन्त्र',fields:['mantra','artha'],mantraPH:'जैसे: ॐ नमः शिवाय',arthaPH:'मन्त्रको अर्थ नेपालीमा...'},
   rashi:   {label:'राशि',fields:['rashi','body','keyword'],rashiPH:'जैसे: मेष राशि',bodyPH:'राशिको विशेषता वा आजको फल...',keywordPH:'जैसे: साहस • नेतृत्व • ऊर्जा'},
@@ -258,9 +259,11 @@ const SUGGESTIONS = {
   ],
 };
 
-let _type='gyan', _theme='shakti';
-let _batchData = [];
-let _batchCurrentIndex = 0;
+// SAFE TEXT BALANCER WITH RESILIENT BACKEND FALLBACK
+function getVal(id){
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
 
 function setType(t,btn){
   _type=t;
@@ -395,7 +398,7 @@ function drawCard(ctx,W,H,full){
   function rr(x,y,w,h,r){
     ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
     ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
-    ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+    ctx.lineTo(x+r,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
   }
 
   ctx.textAlign='center'; ctx.textBaseline='alphabetic';
@@ -413,7 +416,6 @@ function drawCard(ctx,W,H,full){
   sg(c.glow,14); ctx.fillStyle=c.gold; ctx.fillText(catLabel,W/2,y+catH*0.70);
   y+=catH+Math.round(16*s); cg();
 
-  // Dynamic overlap adjustment logic across all variations
   const hookExtra=drawHook(ctx,W,H,s,c,sg,cg,SAFE);
   if(hookExtra>0) y+=hookExtra+Math.round(20*s);
 
@@ -727,7 +729,7 @@ function vcDrawFrame(t){
     ctx.strokeStyle=g;ctx.lineWidth=1.5*s;ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();
   }
   function rr2(x,y,w,h,r){
-    ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+    ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y+r,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x+r,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
   }
   function wl(text,font,maxW){ctx.font=font;const words=text.split(/\s+/);const lines=[];let cur='';words.forEach(w=>{const tt=cur?cur+' '+w:w;if(ctx.measureText(tt).width>maxW&&cur){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);return lines;}
 
@@ -735,7 +737,7 @@ function vcDrawFrame(t){
   ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
   
   const rg=ctx.createRadialGradient(W/2,H*0.3,0,W/2,H*0.3,W*0.7);
-  const pulse=0.10+0.06*Math.sin(t*1.4);rg.addColorStop(0,c.glow+Math.round(pulse*255).toString(16).padStart(2,'0'));rg.addColorStop(1,'transparent');
+  const pulse=0.10+0.06*Math.sin(t*1.4);bg.addColorStop(0,c.glow+Math.round(pulse*255).toString(16).padStart(2,'0'));rg.addColorStop(1,'transparent');
   ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);
 
   _vparticles.forEach(p=>{
@@ -764,7 +766,6 @@ function vcDrawFrame(t){
   sg2(c.glow,14);ctx.fillStyle=c.gold;ctx.fillText(catLabel,W/2,y+catH*0.70);
   y+=catH+Math.round(20*s);ctx.globalAlpha=1;cg2();
   
-  // Overlap protection loop inside the animation generator
   const hook=getVal('f-hook');
   let hookOffset = 0;
   if(hook){
@@ -1065,7 +1066,20 @@ async function aiOptimize(){
 
 function applyAiSuggestions(){ document.getElementById('f-hook').value = "⚠️ धेरैले यो ज्योतिषीय रहस्य बेवास्ता गर्छन्!"; renderCard(); }
 
-buildInputs();buildSuggestions();window.addEventListener('load',()=>{ setTimeout(renderCard,200); });
+// DYNAMIC MONITOR ENGINE FOR FONT FACE LOAD DEFENSE
+window.addEventListener('load', () => {
+  document.fonts.ready.then(() => {
+    setTimeout(() => {
+      buildInputs();
+      buildSuggestions();
+      renderCard();
+    }, 250);
+  });
+});
+
+window.addEventListener('resize', () => {
+  if (_view === 'static') { renderCard(); } else { vcReset(); }
+});
 </script>
 </body>
 </html>
